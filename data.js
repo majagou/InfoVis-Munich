@@ -1,7 +1,7 @@
 // script.js
 
 // Example: Change the color of the header when clicked
-const header = document.querySelector('header');
+const header = document.querySelector('head');
 
 header.addEventListener('click', function() {
     const randomColor = getRandomColor();
