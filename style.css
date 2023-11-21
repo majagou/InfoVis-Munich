@@ -117,9 +117,7 @@ footer {
     z-index: -1; /* Place the image behind other elements */
 }
 
-container{
-align-items: end;
-}
+
 .accordion {
   background-color: transparent;
   color: rgb(191, 191, 191);
