@@ -1,0 +1,113 @@
+header {
+    
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+}
+
+body {
+    background-color: #818181;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    color: #6fffee;
+    font-size: 40px;
+    padding: 20px;
+    margin: 0;
+
+
+}
+
+
+h1{
+    color: #c7c7c7;
+    font-size: 14px;
+}
+main {
+    padding: 20px;
+}
+
+footer {
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Style the sidebar - fixed full height */
+.sidebar {
+
+    width: 160px;
+    position: fixed;
+    overflow-x: hidden;
+    padding-top: 16px;
+    
+  }
+  
+  /* Style sidebar links */
+  .sidebar a {
+    padding: 100px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* Style links on mouse-over */
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Style the main content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    padding: 0px 10px;
+  }
+  
+  /* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }
+/* Add your image styles here */
+#displayedImage {
+    width: 100%;
+    height: 100vh; /* 100% of the viewport height */
+    object-fit: cover; /* Cover the entire container, maintaining aspect ratio */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Place the image behind other elements */
+}
+
+.accordion {
+  background-color: transparent;
+  color: #454545;
+  cursor: pointer;
+  padding: 20px;
+  width: 100%;
+  border: none;
+  text-align: right;
+  outline: none;
+  font-size: 30px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #6fffee;
+  padding: 20px;
+
+  position: relative;
+}
+
+.panel {
+  padding: 18px;
+  display: none;
+  background-color: 6fffee;
+  overflow: hidden;
+}
