@@ -42,7 +42,8 @@ footer {
 /* Style the sidebar - fixed full height */
 .sidebar {
 
-    width: 160px;
+    width: 300px;
+    font-size: 20px;
     position: fixed;
     overflow-x: hidden;
     padding-top: 16px;
@@ -60,8 +61,39 @@ footer {
   
   /* Style links on mouse-over */
   .sidebar a:hover {
-    color: #f1f1f1;
+    color: #6fffee;
   }
+
+    .button1 {
+    color: white;
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    }
+    .button1:hover {
+      background: #6fffee;
+      color: white;
+    }
+    .button2 {
+      color: white;
+      border: none;
+      background-color: transparent;
+      font-size: 24px;
+    }
+    .button2:hover {
+      background: #6fffee;
+      color: white;
+    }
+    .button3 {
+      color: white;
+      border: none;
+      background-color: transparent;
+      font-size: 24px;
+    }
+    .button3:hover {
+      background: #6fffee;
+      color: white;
+    }
   
   /* Style the main content */
   .main {
@@ -85,29 +117,33 @@ footer {
     z-index: -1; /* Place the image behind other elements */
 }
 
+container{
+align-items: end;
+}
 .accordion {
   background-color: transparent;
-  color: #454545;
+  color: rgb(191, 191, 191);
   cursor: pointer;
-  padding: 20px;
+  padding: 30px;
   width: 100%;
   border: none;
   text-align: right;
   outline: none;
-  font-size: 30px;
+  font-size: 26px;
   transition: 0.4s;
 }
 
 .active, .accordion:hover {
-  background-color: #6fffee;
+  background-color: transparent;
   padding: 20px;
-
-  position: relative;
 }
 
 .panel {
+  text-align: right;
+  font-size: 16px;
+  color: white;
   padding: 18px;
   display: none;
-  background-color: #6fffee;
+  background-color: transparent;
   overflow: hidden;
 }
