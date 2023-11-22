@@ -19,7 +19,9 @@ The theme of the website is public transport networks. A map of the network, den
 - Munich (coming soon)
 
 ## Vision
-Add pictures
+![Alt text](<figures/Vision Screenshots/Density.png>)
+![Alt text](<figures/Vision Screenshots/Network.png>)
+![Alt text](<figures/Vision Screenshots/Cluster.png>)
 
 ## About Us
 - Shiyi Gou
