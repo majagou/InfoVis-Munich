@@ -118,7 +118,7 @@ footer {
 }
 
 
-.accordion {
+.accordion-button {
   background-color: transparent;
   color: rgb(191, 191, 191);
   cursor: pointer;
@@ -133,7 +133,7 @@ footer {
 
 .active, .accordion:hover {
   background-color: transparent;
-  padding: 20px;
+  padding: 10px;
 }
 
 .panel {
