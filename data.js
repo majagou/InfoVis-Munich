@@ -1,13 +1,3 @@
-// script.js
-
-// Example: Change the color of the header when clicked
-const header = document.querySelector('head');
-
-header.addEventListener('click', function() {
-    const randomColor = getRandomColor();
-    header.style.backgroundColor = randomColor;
-});
-
 // Function to generate a random color
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -26,7 +16,7 @@ function changeImage(imageSrc) {
     displayedImage.src = imageSrc;
 }
 
-var acc = document.getElementsByClassName("accordion");
+var acc = document.getElementsByClassName("accordion-btn");
 var i;
 
 for (i = 0; i < acc.length; i++) {
