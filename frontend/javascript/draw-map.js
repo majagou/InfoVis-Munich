@@ -13,11 +13,12 @@ async function drawMap () {
     const stopIdAccessor = d => d.stop_id;
     const stopNameAccessor = d => d.stop_name;
     const stopLatAccessor = d => +d.stop_lat; // Convert to number
-    const stopLonAccessor = d => +d.stop_lon; // Convert to number   
-
+    const stopLonAccessor = d => +d.stop_lon; // Convert to number  
+    
     // Create chart dimensions
     let dimensions = {
         width: window.innerWidth * 0.9,
+        height: window.innerHeight * 0.9,
         margin: { top: 10, right: 10, bottom: 10, left: 10 },
     }
 
@@ -25,13 +26,54 @@ async function drawMap () {
         - dimensions.margin.left
         - dimensions.margin.right
 
-    //Draw canvas
+    // Draw canvas
+    const projection = d3.geoMercator()
+    .fitSize([dimensions.boundedWidth, dimensions.boundedHeight], MunichShapes)
+  
+    const pathGenerator = d3.geoPath(projection)
+
+    dimensions.boundedHeightheight = dimensions.height
+        - dimensions.margin.top
+        - dimensions.margin.bottom
+
+    const wrapper = d3.select("#wrapper")
+
+    const svg = wrapper.append("svg")
+        .attr("width", dimensions.width)
+        .attr("height", dimensions.height)
+        .attr("viewBox", `0 0 ${dimensions.width} ${dimensions.height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .style("max-width", "100%")
+        .style("height", "auto");
+
+    svg.selectAll ('path')
+        .data(MunichShapes.features)
+        .enter()
+        .append('path')
+        .attr('d', d => {
+            const coordinates = d.geometry.coordinates[0]; // Assuming the first array contains the coordinates
+            console.log('Coordinates:', coordinates);
+    
+            // Check for NaN or invalid coordinates
+            if (coordinates.some(coord => isNaN(coord[0]) || isNaN(coord[1]))) {
+                console.error('Invalid coordinates found:', coordinates);
+                return ''; // Return an empty string to skip rendering this path
+            }
+    
+            // Use pathGenerator to generate the path
+            return pathGenerator(d);
+        })
+        .style('fill', 'lightblue')
+        .style('stroke', 'white')
+
+    /*//Draw canvas
+
     const container = d3.select("#wrapper")
 
     const wrapper = container.append("svg")
         .attr("width", dimensions.width)
     
-    const sphere = ({type: "Sphere"})
+    const sphere = MunichShapes
     
     const bounds = wrapper.append("g")
   
@@ -106,6 +148,6 @@ async function drawMap () {
         countries.exit().remove()
     }
 
-    drawMap(selectedProjection)
+    drawMap(selectedProjection)*/
 }
 drawMap()
