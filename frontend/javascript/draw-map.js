@@ -8,6 +8,7 @@ async function drawMap () {
 
     //Define Accessor for geojson
     const areaNameAccessor = d => d.properties["name"]
+    const areaIdAccessor = d => d.properties["objectid"]
 
     //Define Accessor for CSV
     const stopIdAccessor = d => d.stop_id;
@@ -26,33 +27,29 @@ async function drawMap () {
         - dimensions.margin.left
         - dimensions.margin.right
 
+    dimensions.boundedHeight = dimensions.height
+        - dimensions.margin.top
+        - dimensions.margin.bottom
+
     // Draw canvas
     const projection = d3.geoMercator()
     .fitSize([dimensions.boundedWidth, dimensions.boundedHeight], MunichShapes)
   
-    const pathGenerator = d3.geoPath(projection)
-
-    dimensions.boundedHeightheight = dimensions.height
-        - dimensions.margin.top
-        - dimensions.margin.bottom
+    let pathGenerator = d3.geoPath(projection)
 
     const wrapper = d3.select("#wrapper")
+        .append("svg")
+            .attr("width", dimensions.width)
+            .attr("height", dimensions.height)
 
-    const svg = wrapper.append("svg")
-        .attr("width", dimensions.width)
-        .attr("height", dimensions.height)
-        .attr("viewBox", `0 0 ${dimensions.width} ${dimensions.height}`)
-        .attr("preserveAspectRatio", "xMidYMid meet")
-        .style("max-width", "100%")
-        .style("height", "auto");
-
-    svg.selectAll ('path')
+    const bounds = wrapper.append("g")
+        .style("transform", `translate(${dimensions.margin.left}px, ${dimensions.margin.top}px)`)
+        
+    bounds.selectAll('path')
         .data(MunichShapes.features)
-        .enter()
-        .append('path')
+        .enter().append('path')
         .attr('d', d => {
             const coordinates = d.geometry.coordinates[0]; // Assuming the first array contains the coordinates
-            console.log('Coordinates:', coordinates);
     
             // Check for NaN or invalid coordinates
             if (coordinates.some(coord => isNaN(coord[0]) || isNaN(coord[1]))) {
@@ -64,7 +61,8 @@ async function drawMap () {
             return pathGenerator(d);
         })
         .style('fill', 'lightblue')
-        .style('stroke', 'white')
+        .style('stroke', 'white');
+    
 
     /*//Draw canvas
 
