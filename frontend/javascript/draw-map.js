@@ -1,68 +1,49 @@
 async function drawMap () {
+    // Load geojson and CSV data
+    const MunichShapes = await d3.json("./../formatted3.json");
+    console.log(MunichShapes.features);
+    const dataset = await d3.csv("./../stops.csv");
+    console.log(dataset);
 
-    //Load geojson and CSV data
-    const MunichShapes = await d3.json("./../formatted.json")
-    console.log(MunichShapes)
-    const dataset = await d3.csv("./../stops.csv")
-    console.log(dataset) 
+    // Define Accessor for geojson
+    const areaNameAccessor = d => d.properties["name"];
+    const areaIdAccessor = d => d.properties["objectid"];
 
-    //Define Accessor for geojson
-    const areaNameAccessor = d => d.properties["name"]
-    const areaIdAccessor = d => d.properties["objectid"]
-
-    //Define Accessor for CSV
+    // Define Accessor for CSV
     const stopIdAccessor = d => d.stop_id;
     const stopNameAccessor = d => d.stop_name;
     const stopLatAccessor = d => +d.stop_lat; // Convert to number
     const stopLonAccessor = d => +d.stop_lon; // Convert to number  
-    
-    // Create chart dimensions
-    let dimensions = {
-        width: window.innerWidth * 0.9,
-        height: window.innerHeight * 0.9,
-        margin: { top: 10, right: 10, bottom: 10, left: 10 },
-    }
 
-    dimensions.boundedWidth = dimensions.width
-        - dimensions.margin.left
-        - dimensions.margin.right
+    // Set up canvas (SVG)
 
-    dimensions.boundedHeight = dimensions.height
-        - dimensions.margin.top
-        - dimensions.margin.bottom
+    // Retrieve SVG container width and height
+    const svgWidth = 900;
+    const svgHeight = 900;
+    const padding = 30;
 
-    // Draw canvas
+    const svg = d3.select("#VisSVG")
+        .attr("height", svgHeight)
+        .attr("width", svgWidth);
+
     const projection = d3.geoMercator()
-    .fitSize([dimensions.boundedWidth, dimensions.boundedHeight], MunichShapes)
-  
-    let pathGenerator = d3.geoPath(projection)
+        .fitSize([svgWidth, svgHeight], MunichShapes) // Adjust to fit the features within SVG dimensions
+        .translate([svgWidth / 2, svgHeight /2]);
+    
+    const pathGenerator = d3.geoPath().projection(projection);
 
-    const wrapper = d3.select("#wrapper")
-        .append("svg")
-            .attr("width", dimensions.width)
-            .attr("height", dimensions.height)
-
-    const bounds = wrapper.append("g")
-        .style("transform", `translate(${dimensions.margin.left}px, ${dimensions.margin.top}px)`)
-        
-    bounds.selectAll('path')
+    // Draw map paths
+    svg.append("g")
+        .selectAll("path")
         .data(MunichShapes.features)
-        .enter().append('path')
-        .attr('d', d => {
-            const coordinates = d.geometry.coordinates[0]; // Assuming the first array contains the coordinates
-    
-            // Check for NaN or invalid coordinates
-            if (coordinates.some(coord => isNaN(coord[0]) || isNaN(coord[1]))) {
-                console.error('Invalid coordinates found:', coordinates);
-                return ''; // Return an empty string to skip rendering this path
-            }
-    
-            // Use pathGenerator to generate the path
-            return pathGenerator(d);
-        })
-        .style('fill', 'lightblue')
-        .style('stroke', 'white');
-    
+        .enter().append("path")
+            .attr("fill", "#69b3a2")
+            .attr("d", pathGenerator)
+            .style("stroke", "#fff")
+}
+
+drawMap();
+
 
     /*//Draw canvas
 
@@ -147,5 +128,3 @@ async function drawMap () {
     }
 
     drawMap(selectedProjection)*/
-}
-drawMap()

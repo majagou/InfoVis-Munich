@@ -6,7 +6,10 @@
     <title>Mobility Nav</title>
     <link rel="stylesheet" href="./../frontend/css/style.css">
     <link rel="stylesheet" href="./../frontend/css/density.css">
+    <script src="./../d3.v7.js"></script>
     <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 </head>
 <body>
     <div id="content">
@@ -14,7 +17,9 @@
             <select id="select"></select>
             <h3 id="name"></h3>
         </div>-->
-        <div id="wrapper" class="flex-center"></div>
+        <div id="wrapper" class="flex-center">
+            <svg id="VisSVG"></svg>
+        </div>
     </div>
     <main>
         <div id="title">
@@ -63,8 +68,6 @@
     <footer>
         <p>&copy; Group 28 InfoVis</p>
     </footer>
-
-    <script src="./../d3.v7.js"></script>
     <script src="./../frontend/javascript/data.js"></script>
     <script src="./../frontend/javascript/draw-map.js"></script>
 </body>
