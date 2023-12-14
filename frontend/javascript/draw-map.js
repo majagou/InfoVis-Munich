@@ -1,9 +1,42 @@
-async function drawMap () {
-    // Load geojson and CSV data
-    const MunichShapes = await d3.json("./../formatted3.json");
-    console.log(MunichShapes.features);
-    const dataset = await d3.csv("./../stops.csv");
-    console.log(dataset);
+let Stadtbezirk, Bezirksteile, Stadtvieltel;
+
+async function initializeMap() {
+    // Load geojson data
+    Stadtbezirk = await d3.json("./../geo-data/formatted-Stadtbezirk.geojson");
+    Bezirksteile = await d3.json("./../geo-data/formatted-Bezirksteile.geojson");
+    Stadtvieltel = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
+
+    // Setup event listeners for buttons
+    var map1 = document.getElementById("AB-1");
+    var map2 = document.getElementById("AB-2");
+    var map3 = document.getElementById("AB-3");
+
+    map1.addEventListener("click", function() {
+        console.log("Button 1 clicked, data:", Stadtbezirk);
+        drawMap(Stadtbezirk);
+    });
+
+    map2.addEventListener("click", function() {
+        drawMap(Bezirksteile);
+    });
+
+    map3.addEventListener("click", function() {
+        drawMap(Stadtvieltel);
+    });
+
+    // Draw initial map
+    drawMap(Stadtbezirk);
+}
+
+// Call the initialize function
+initializeMap();
+
+async function drawMap (mapdata) {
+    
+    if (!mapdata || !mapdata.features) {
+        console.error('Invalid or undefined mapdata:', mapdata);
+        return; // Exit the function if mapdata is invalid
+    }
 
     // Define Accessor for geojson
     const areaNameAccessor = d => d.properties["name"];
@@ -20,33 +53,36 @@ async function drawMap () {
     const svgHeight = window.innerHeight*0.9;
     const padding = 30;
 
-    const svg = d3.select(".VisSVG")
-        .attr('viewBox', `0 0 svgWidth svgHeight`)
-        .attr("height", svgHeight)
-        .attr("width", svgWidth)
+    // Clear the SVG container first
+    d3.select(".VisSVG").selectAll("*").remove();
 
-    MunichShapes.features = MunichShapes.features.map(function (feature) {
+    // Re-select the SVG container and set its attributes
+    const svg = d3.select(".VisSVG")
+        .attr("height", svgHeight)
+        .attr("width", svgWidth);
+
+    // Rest of the map drawing code
+    mapdata.features = mapdata.features.map(function (feature) {
         return turf.rewind(feature, {reverse: true})
-    })
-    
-    const g = svg.append('g').attr("class", 'path-wrap').attr("width", svgWidth).attr("height",svgHeight)
+    });
+
+    const g = svg.append('g').attr("class", 'path-wrap').attr("width", svgWidth).attr("height", svgHeight);
 
     const projection = d3.geoMercator()
-        .fitExtent([[padding, padding], [svgWidth - padding, svgHeight - padding]], MunichShapes);
-    
+        .fitExtent([[padding, padding], [svgWidth - padding, svgHeight - padding]], mapdata);
+
     const pathGenerator = d3.geoPath().projection(projection);
-    console.log('pathGenerator: ', pathGenerator);
 
     const mapDraw = g.selectAll("path")
-            .data(MunichShapes.features) //数据绑定
+        .data(mapdata.features); //数据绑定
     mapDraw.join("path")
         .attr("class", "continent-path")
         .attr("d", pathGenerator) //绘制path
         .attr("stroke-width", 2)
-        .attr("stroke", "#ffffff")
-        .style("fill", "lightblue")
+        .attr("stroke", "#ffffff");
+        //.style("fill", "lightblue")
 }
-drawMap();
+
 
     /*//Draw canvas
 
