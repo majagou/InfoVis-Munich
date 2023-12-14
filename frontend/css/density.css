@@ -6,10 +6,12 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
 }
 
 .VisSVG {
     display: inline-block;
     justify-content: center;
+    pointer-events: all;
+    z-index: 0;
+    
 }

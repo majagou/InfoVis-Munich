@@ -1,4 +1,7 @@
 let Stadtbezirk, Bezirksteile, Stadtvieltel;
+let mapdata;
+let svg, g, projection, pathGenerator;
+const padding = 10;
 
 async function initializeMap() {
     // Load geojson data
@@ -7,81 +10,76 @@ async function initializeMap() {
     Stadtvieltel = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
 
     // Setup event listeners for buttons
-    var map1 = document.getElementById("AB-1");
-    var map2 = document.getElementById("AB-2");
-    var map3 = document.getElementById("AB-3");
-
-    map1.addEventListener("click", function() {
-        console.log("Button 1 clicked, data:", Stadtbezirk);
-        drawMap(Stadtbezirk);
-    });
-
-    map2.addEventListener("click", function() {
-        drawMap(Bezirksteile);
-    });
-
-    map3.addEventListener("click", function() {
-        drawMap(Stadtvieltel);
-    });
+    document.getElementById("AB-1").addEventListener("click", () => drawMap(Stadtbezirk));
+    document.getElementById("AB-2").addEventListener("click", () => drawMap(Bezirksteile));
+    document.getElementById("AB-3").addEventListener("click", () => drawMap(Stadtvieltel));
 
     // Draw initial map
     drawMap(Stadtbezirk);
 }
 
-// Call the initialize function
-initializeMap();
-
-async function drawMap (mapdata) {
-    
+async function drawMap(data) {
+    mapdata = data; // Update global mapdata
     if (!mapdata || !mapdata.features) {
         console.error('Invalid or undefined mapdata:', mapdata);
         return; // Exit the function if mapdata is invalid
     }
 
-    // Define Accessor for geojson
-    const areaNameAccessor = d => d.properties["name"];
-    const areaIdAccessor = d => d.properties["objectid"];
+        // Apply turf.rewind to each feature
+    mapdata.features = mapdata.features.map(function (feature) {
+        return turf.rewind(feature, { reverse: true });
+    });
 
-    // Define Accessor for CSV
-    const stopIdAccessor = d => d.stop_id;
-    const stopNameAccessor = d => d.stop_name;
-    const stopLatAccessor = d => +d.stop_lat; // Convert to number
-    const stopLonAccessor = d => +d.stop_lon; // Convert to number  
+    updateMapSize(mapdata); // Draw map with current window size
+}
 
-    //Set up SVG
-    const svgWidth = window.innerWidth*0.9;
-    const svgHeight = window.innerHeight*0.9;
-    const padding = 30;
+function updateMapSize(data) {
+    mapdata = data;
+
+    const svgWidth = window.innerWidth;
+    const svgHeight = window.innerHeight;
 
     // Clear the SVG container first
     d3.select(".VisSVG").selectAll("*").remove();
 
     // Re-select the SVG container and set its attributes
-    const svg = d3.select(".VisSVG")
+    svg = d3.select(".VisSVG")
         .attr("height", svgHeight)
         .attr("width", svgWidth);
 
-    // Rest of the map drawing code
-    mapdata.features = mapdata.features.map(function (feature) {
-        return turf.rewind(feature, {reverse: true})
-    });
-
-    const g = svg.append('g').attr("class", 'path-wrap').attr("width", svgWidth).attr("height", svgHeight);
-
-    const projection = d3.geoMercator()
+    // Set up projection and path generator
+    projection = d3.geoMercator()
         .fitExtent([[padding, padding], [svgWidth - padding, svgHeight - padding]], mapdata);
+    pathGenerator = d3.geoPath().projection(projection);
 
-    const pathGenerator = d3.geoPath().projection(projection);
-
-    const mapDraw = g.selectAll("path")
-        .data(mapdata.features); //数据绑定
-    mapDraw.join("path")
+    // Draw paths
+    g = svg.append('g').attr("class", 'path-wrap');
+    g.selectAll("path")
+        .data(mapdata.features || [])
+        .join("path")
         .attr("class", "continent-path")
-        .attr("d", pathGenerator) //绘制path
+        .attr("d", pathGenerator)
         .attr("stroke-width", 2)
         .attr("stroke", "#ffffff");
-        //.style("fill", "lightblue")
+
+    // Define zoom function
+    const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on("zoom", zoomed);
+
+    // Apply zoom behavior to the SVG
+    svg.call(zoom);
+
+    function zoomed(event) {
+        g.attr("transform", event.transform);
+    }
 }
+
+// Attach the event listener to the window for resize events
+window.addEventListener("resize", updateMapSize);
+
+// Call the initialize function
+initializeMap();
 
 
     /*//Draw canvas
