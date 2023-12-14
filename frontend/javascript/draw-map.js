@@ -1,7 +1,7 @@
 let Stadtbezirk, Bezirksteile, Stadtvieltel;
 let mapdata;
 let svg, g, projection, pathGenerator;
-const padding = 10;
+const padding = 0;
 
 async function initializeMap() {
     // Load geojson data
@@ -44,23 +44,28 @@ function updateMapSize(data) {
 
     // Re-select the SVG container and set its attributes
     svg = d3.select(".VisSVG")
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .attr("height", svgHeight)
         .attr("width", svgWidth);
 
     // Set up projection and path generator
     projection = d3.geoMercator()
         .fitExtent([[padding, padding], [svgWidth - padding, svgHeight - padding]], mapdata);
+    
     pathGenerator = d3.geoPath().projection(projection);
 
     // Draw paths
     g = svg.append('g').attr("class", 'path-wrap');
+    
     g.selectAll("path")
         .data(mapdata.features || [])
         .join("path")
         .attr("class", "continent-path")
         .attr("d", pathGenerator)
         .attr("stroke-width", 2)
-        .attr("stroke", "#ffffff");
+        .attr("stroke", "#ffffff")
+        .attr("transform", "translate(0,0)");
+
 
     // Define zoom function
     const zoom = d3.zoom()
