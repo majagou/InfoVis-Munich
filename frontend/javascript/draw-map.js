@@ -15,35 +15,38 @@ async function drawMap () {
     const stopLatAccessor = d => +d.stop_lat; // Convert to number
     const stopLonAccessor = d => +d.stop_lon; // Convert to number  
 
-    // Set up canvas (SVG)
-
-    // Retrieve SVG container width and height
-    const svgWidth = 900;
-    const svgHeight = 900;
+    //Set up SVG
+    const svgWidth = window.innerWidth*0.9;
+    const svgHeight = window.innerHeight*0.9;
     const padding = 30;
 
-    const svg = d3.select("#VisSVG")
+    const svg = d3.select(".VisSVG")
+        .attr('viewBox', `0 0 svgWidth svgHeight`)
         .attr("height", svgHeight)
-        .attr("width", svgWidth);
+        .attr("width", svgWidth)
+
+    MunichShapes.features = MunichShapes.features.map(function (feature) {
+        return turf.rewind(feature, {reverse: true})
+    })
+    
+    const g = svg.append('g').attr("class", 'path-wrap').attr("width", svgWidth).attr("height",svgHeight)
 
     const projection = d3.geoMercator()
-        .fitSize([svgWidth, svgHeight], MunichShapes) // Adjust to fit the features within SVG dimensions
-        .translate([svgWidth / 2, svgHeight /2]);
+        .fitExtent([[padding, padding], [svgWidth - padding, svgHeight - padding]], MunichShapes);
     
     const pathGenerator = d3.geoPath().projection(projection);
+    console.log('pathGenerator: ', pathGenerator);
 
-    // Draw map paths
-    svg.append("g")
-        .selectAll("path")
-        .data(MunichShapes.features)
-        .enter().append("path")
-            .attr("fill", "#69b3a2")
-            .attr("d", pathGenerator)
-            .style("stroke", "#fff")
+    const mapDraw = g.selectAll("path")
+            .data(MunichShapes.features) //数据绑定
+    mapDraw.join("path")
+        .attr("class", "continent-path")
+        .attr("d", pathGenerator) //绘制path
+        .attr("stroke-width", 2)
+        .attr("stroke", "#ffffff")
+        .style("fill", "lightblue")
 }
-
 drawMap();
-
 
     /*//Draw canvas
 
