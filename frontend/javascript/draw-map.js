@@ -115,7 +115,6 @@ async function drawMap() {
     // Load stops data from the separate CSV file
 try {
     var selectedColumns = ["stop_name", "Longitude", "Latitude"];
-    var selectedColumnsAlter = ["stop_name", "Longitude", "location_type"];
 
     const stopsData = await d3.csv("./../stops_modified.csv").then(function(data) {
         // Create a new array with only the selected columns
