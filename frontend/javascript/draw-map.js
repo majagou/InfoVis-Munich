@@ -56,7 +56,17 @@ function initializeSVG() {
 }
 
 function drawStops(stopsData) {
-    // Create a new group for stops
+    const stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
+
+    stopsGroup.selectAll("circle")
+        .data(stopsData)
+        .join("circle")
+        .attr("class", "stop-circle")
+        .attr("cx", d => projection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[0])
+        .attr("cy", d => projection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[1])
+        .attr("r", 5)
+        .attr("fill", "red");
+/*     // Create a new group for stops
     const stopsGroup = svg.append('g').attr("class", 'stops-wrap');
 
     // Draw circles for each stop
@@ -77,7 +87,7 @@ function drawStops(stopsData) {
             return parseFloat(d.Longitude * 50) })
         .attr("cy", function(d) { return parseFloat(d.Latitude) })
         .attr("r", 5) // Adjust the radius as needed
-        .attr("fill", "red"); // Adjust the color as needed
+        .attr("fill", "red"); // Adjust the color as needed */
     
 }
 
