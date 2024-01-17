@@ -150,3 +150,9 @@ footer {
 .panel>p:hover {
     color: #6fffee;
 }
+
+.stop-circle {
+    stroke: #fff;
+    stroke-width: 2;
+    fill: red;
+}
