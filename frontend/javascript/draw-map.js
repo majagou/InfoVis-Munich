@@ -85,35 +85,6 @@ function drawStops(stopsData) {
 async function drawMap() {
     const g = svg.select('.path-wrap');
     g.selectAll('*').remove(); // Clear existing layers
-
-    Object.keys(layers).forEach(layerName => {
-        if (layers[layerName].isVisible && layers[layerName].data) {
-            let data = layers[layerName].data;
-                    // Apply turf.rewind to each feature
-            data.features = data.features.map(function (feature) {
-                return turf.rewind(feature, { reverse: true });
-            });
-
-            projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], data);
-
-            // Draw layer with specific style
-            g.selectAll("path." + layerName)
-                .data(data.features || [])
-                .join("path")
-                .attr("class", layerName)  // Assign class for styling
-                .attr("d", pathGenerator)
-                .attr("stroke-width", layerStyles[layerName].strokeWidth)
-                .attr("stroke", layerStyles[layerName].strokeColor)
-                .attr("fill", layerStyles[layerName].fillColor)
-                .on("click", onPolygonClick)
-                .on("mouseout", function() {
-                    document.getElementById('tooltip').style.visibility = 'hidden';
-                });
-        }
-    });
-
-    // Load stops data from the separate CSV file
-try {
     var selectedColumns = ["stop_name", "Longitude", "Latitude"];
 
     const stopsData = await d3.csv("./../stops_modified.csv").then(function(data) {
@@ -167,17 +138,46 @@ try {
         return selectedData;
     });
     
+    Object.keys(layers).forEach(layerName => {
+        if (layers[layerName].isVisible && layers[layerName].data) {
+            let data = layers[layerName].data;
+                    // Apply turf.rewind to each feature
+            data.features = data.features.map(function (feature) {
+                return turf.rewind(feature, { reverse: true });
+            });
 
-                               
-    console.log(stopsData); // Log stopsData to the console
-    // var data = [{ x: 50, y: 50, radius: 20 }, { x: 150, y: 100, radius: 30 }];
-    // console.log(data); // Log stopsData to the console
+            projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], data);
 
-    // Draw stops on the map
-    drawStops(stopsData);
-} catch (error) {
-    console.error('Error loading stops data:', error);
-}
+            // Draw layer with specific style
+            g.selectAll("path." + layerName)
+                .data(data.features || [])
+                .join("path")
+                .attr("class", layerName)  // Assign class for styling
+                .attr("d", pathGenerator)
+                .attr("stroke-width", layerStyles[layerName].strokeWidth)
+                .attr("stroke", layerStyles[layerName].strokeColor)
+                .attr("fill", layerStyles[layerName].fillColor)
+                .on("click", onPolygonClick)
+                .on("mouseout", function() {
+                    document.getElementById('tooltip').style.visibility = 'hidden';
+                });
+        }
+    });
+
+    // Load stops data from the separate CSV file
+    try {
+
+
+                                
+        console.log(stopsData); // Log stopsData to the console
+        // var data = [{ x: 50, y: 50, radius: 20 }, { x: 150, y: 100, radius: 30 }];
+        // console.log(data); // Log stopsData to the console
+
+        // Draw stops on the map
+        drawStops(stopsData);
+    } catch (error) {
+        console.error('Error loading stops data:', error);
+    }
 
 }
 
