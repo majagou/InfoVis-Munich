@@ -16,95 +16,17 @@ async function initializeMap() {
     layers.Stadtvieltel.data = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
 
     // Setup event listeners for buttons
-<<<<<<< HEAD
-    document.getElementById("AB-1").addEventListener("click", () => drawMap(Stadtbezirk));
-    document.getElementById("AB-2").addEventListener("click", () => drawMap(Bezirksteile));
-    document.getElementById("AB-3").addEventListener("click", () => drawMap(Stadtvieltel));
-    document.getElementById("AB-4").addEventListener("click", () => drawStops(S-Bahn));
-
-
-    // Draw initial map
-    drawMap(Stadtbezirk);
-}
-
-function drawStops(stopsData) {
-    // Create a new group for stops
-    const stopsGroup = svg.append('g').attr("class", 'stops-wrap');
-
-    // Draw circles for each stop
-    stopsGroup.selectAll("circle")
-        .data(stopsData)
-        .join("circle")
-        .attr("class", "stop-circle")
-        // .attr("cx", d => {
-        //     const longitude = parseFloat(d.stop_lon);
-        //     return projection(d[longitude, parseFloat(d.stop_lat)])[0];
-        // })
-        // .attr("cy", d => {
-        //     const latitude = parseFloat(d.stop_lat);
-        //     return projection([parseFloat(d.stop_lon), latitude])[1] ;
-        // })
-        .attr("cx", function(d) { return parseFloat(d.stop_lon) * 100 })
-        .attr("cy", function(d) { return parseFloat(d.stop_lat) })
-        .attr("r", 5) // Adjust the radius as needed
-        .attr("fill", "red"); // Adjust the color as needed
-}
-
-
-async function drawMap(data) {
-    mapdata = data; // Update global mapdata
-    if (!mapdata || !mapdata.features) {
-        console.error('Invalid or undefined mapdata:', mapdata);
-        return; // Exit the function if mapdata is invalid
-    }
-=======
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
     document.getElementById("AB-2").addEventListener("click", () => toggleLayer('Bezirksteile'));
     document.getElementById("AB-3").addEventListener("click", () => toggleLayer('Stadtvieltel'));
->>>>>>> 595578a0195ae39c3953a15fcfdd5e38619f6976
+    document.getElementById("AB-4").addEventListener("click", () => toggleLayer('S-Bahn'));
 
     // Initialize SVG, projection, etc.
     initializeSVG();
 
-<<<<<<< HEAD
-    updateMapSize(mapdata); // Draw map with current window size
-    
-    // Load stops data from the separate CSV file
-    try {
-        var selectedColumns = ["stop_id", "stop_lat", "stop_lon"];
-        const stopsData = await d3.csv("./../geo-data/stops.geojson").then(function(data) {
-            // Create a new array with only the selected columns
-            var selectedData = data.map(function(row) {
-                var selectedRow = {};
-                selectedColumns.forEach(function(column) {
-                    selectedRow[column] = row[column];
-                });
-                return selectedRow;
-            });
-        
-            // Display the selected data in the console
-            console.log(selectedData);
-        
-            // Now you can use the 'selectedData' variable as needed in your code
-            // For example, you can pass it to a function or perform further processing
-            return selectedData;
-        });
-        
-
-                                   
-        console.log(stopsData); // Log stopsData to the console
-        var data = [{ x: 50, y: 50, radius: 20 }, { x: 150, y: 100, radius: 30 }];
-        console.log(data); // Log stopsData to the console
-
-        // Draw stops on the map
-        drawStops(stopsData);
-    } catch (error) {
-        console.error('Error loading stops data:', error);
-    }
-=======
     // Draw the initial state of the map
     drawMap();
->>>>>>> 595578a0195ae39c3953a15fcfdd5e38619f6976
+    
 }
 
 function toggleLayer(layerName) {
@@ -133,7 +55,34 @@ function initializeSVG() {
     svg.call(zoom);
 }
 
-function drawMap() {
+function drawStops(stopsData) {
+    // Create a new group for stops
+    const stopsGroup = svg.append('g').attr("class", 'stops-wrap');
+
+    // Draw circles for each stop
+    stopsGroup.selectAll("circle")
+        .data(stopsData)
+        .join("circle")
+        .attr("class", "stop-circle")
+        // .attr("cx", d => {
+        //     const longitude = parseFloat(d.stop_lon);
+        //     return projection(d[longitude, parseFloat(d.stop_lat)])[0];
+        // })
+        // .attr("cy", d => {
+        //     const latitude = parseFloat(d.stop_lat);
+        //     return projection([parseFloat(d.stop_lon), latitude])[1] ;
+        // })
+        .attr("cx", function(d) { 
+            // console.log(parseFloat(d.Longitude)); 
+            return parseFloat(d.Longitude * 50) })
+        .attr("cy", function(d) { return parseFloat(d.Latitude) })
+        .attr("r", 5) // Adjust the radius as needed
+        .attr("fill", "red"); // Adjust the color as needed
+    
+}
+
+
+async function drawMap() {
     const g = svg.select('.path-wrap');
     g.selectAll('*').remove(); // Clear existing layers
 
@@ -162,6 +111,75 @@ function drawMap() {
                 });
         }
     });
+
+    // Load stops data from the separate CSV file
+try {
+    var selectedColumns = ["stop_name", "Longitude", "Latitude"];
+    var selectedColumnsAlter = ["stop_name", "Longitude", "location_type"];
+
+    const stopsData = await d3.csv("./../stops_modified.csv").then(function(data) {
+        // Create a new array with only the selected columns
+        var selectedData = data.map(function(row) {
+            var selectedRow = {};
+            if (isNaN(parseFloat(row.Latitude)) && !(isNaN(parseFloat(row.Longitude)))){
+                // console.log(row.Latitude)
+
+                row.Latitude = row.Longitude;
+                // delete row.Longitude;
+                row.Longitude = row.location_type;
+                // delete row.location_type;
+
+                selectedColumns.forEach(function(column) {
+
+                    selectedRow[column] = row[column];
+                });
+
+                
+            } else if(isNaN(parseFloat(row.Latitude)) && isNaN(parseFloat(row.Longitude))){ 
+                row.Latitude = row.location_type;
+                // delete row.Longitude;
+                row.Longitude = row.parent_station;
+                // delete row.location_type;
+
+                selectedColumns.forEach(function(column) {
+
+                    selectedRow[column] = row[column];
+                });
+            }
+            else{
+                // console.log(row.Latitude)
+                selectedColumns.forEach(function(column) {
+
+                    selectedRow[column] = row[column];
+                });
+            }
+            // selectedColumns.forEach(function(column) {
+
+            //     selectedRow[column] = row[column];
+            // });
+            return selectedRow;
+        });
+    
+        // Display the selected data in the console
+        // console.log(selectedData);
+    
+        // Now you can use the 'selectedData' variable as needed in your code
+        // For example, you can pass it to a function or perform further processing
+        return selectedData;
+    });
+    
+
+                               
+    console.log(stopsData); // Log stopsData to the console
+    // var data = [{ x: 50, y: 50, radius: 20 }, { x: 150, y: 100, radius: 30 }];
+    // console.log(data); // Log stopsData to the console
+
+    // Draw stops on the map
+    drawStops(stopsData);
+} catch (error) {
+    console.error('Error loading stops data:', error);
+}
+
 }
 
 let isInfoEnabled = false; // Default state
