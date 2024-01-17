@@ -69,21 +69,66 @@ function drawMap() {
 
             // Draw layer with specific style
             g.selectAll("path." + layerName)
-                .data(data.features)
+                .data(data.features || [])
                 .join("path")
                 .attr("class", layerName)  // Assign class for styling
                 .attr("d", pathGenerator)
                 .attr("stroke-width", layerStyles[layerName].strokeWidth)
                 .attr("stroke", layerStyles[layerName].strokeColor)
-                .attr("fill", layerStyles[layerName].fillColor);
+                .attr("fill", layerStyles[layerName].fillColor)
+                .on("click", onPolygonClick)
+                .on("mouseout", function() {
+                    document.getElementById('tooltip').style.visibility = 'hidden';
+                });
         }
     });
 }
 
+let isInfoEnabled = false; // Default state
+
+function toggleInfo() {
+    isInfoEnabled = !isInfoEnabled;
+}
+
+document.getElementById('infoToggle').addEventListener('change', function() {
+    toggleInfo();
+});
+
+// Function to handle click event on a polygon
+function onPolygonClick(event) {
+    if (!isInfoEnabled) return;
+
+    const d = d3.select(this).datum();
+    const name = d.properties.name;
+    const area = d.properties.flaeche_qm;
+
+    let tooltipContent = '';
+
+    if (name) { // Check if 'name' is defined and not null
+        tooltipContent += `Name: ${name}<br>`; // Add 'Name' to the content
+    }
+
+    if (area) { // Similarly, you can check for 'area' if needed
+        tooltipContent += `Area: ${area} sqm`;
+    }
+
+    // If both 'name' and 'area' are undefined, you could handle it, for example:
+    if (!name && !area) {
+        tooltipContent = 'No information available';
+    }
+
+    const tooltip = document.getElementById('tooltip');
+    tooltip.innerHTML = tooltipContent;
+    tooltip.style.left = event.pageX + 'px'; // Position horizontally
+    tooltip.style.top = event.pageY + 'px'; // Position vertically
+    tooltip.style.visibility = 'visible';
+}
+
+
 const layerStyles = {
-    Stadtbezirk: { strokeWidth: 6, strokeColor: "#ff0000", fillColor: "none"},
-    Bezirksteile: { strokeWidth: 3, strokeColor: "#00ff00", fillColor: "none" },
-    Stadtvieltel: { strokeWidth: 1, strokeColor: "#0000ff", fillColor: "none" }
+    Stadtbezirk: { strokeWidth: 6, strokeColor: "#ff0000", fillColor: "transparent"},
+    Bezirksteile: { strokeWidth: 3, strokeColor: "#00ff00", fillColor: "transparent" },
+    Stadtvieltel: { strokeWidth: 1, strokeColor: "#0000ff", fillColor: "transparent" }
 };
 
 // Resize event listener
