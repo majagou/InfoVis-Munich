@@ -1,7 +1,6 @@
-//let Stadtbezirk, Bezirksteile, Stadtvieltel;
-//let mapdata;
 let svg, g, projection, pathGenerator;
-//const padding = 0;
+
+let showStops = false; // This variable will control the visibility of the stops
 
 let layers = {
     Stadtbezirk: { data: null, isVisible: true },
@@ -19,7 +18,11 @@ async function initializeMap() {
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
     document.getElementById("AB-2").addEventListener("click", () => toggleLayer('Bezirksteile'));
     document.getElementById("AB-3").addEventListener("click", () => toggleLayer('Stadtvieltel'));
-    document.getElementById("AB-4").addEventListener("click", () => toggleLayer('S-Bahn'));
+    document.getElementById("AB-4").addEventListener("click", () => {
+        showStops = !showStops; // Toggle the state
+        drawMap(); // Redraw the map with the new state
+    });
+    
 
     // Initialize SVG, projection, etc.
     initializeSVG();
@@ -56,7 +59,12 @@ function initializeSVG() {
 }
 
 function drawStops(stopsData) {
-    const stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
+    let stopsGroup = svg.select('.stops-wrap');
+
+    // Create the group if it doesn't exist
+    if (stopsGroup.empty()) {
+        stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
+    }
 
     stopsGroup.selectAll("circle")
         .data(stopsData)
@@ -66,29 +74,6 @@ function drawStops(stopsData) {
         .attr("cy", d => projection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[1])
         .attr("r", 5)
         .attr("fill", "red");
-/*     // Create a new group for stops
-    const stopsGroup = svg.append('g').attr("class", 'stops-wrap');
-
-    // Draw circles for each stop
-    stopsGroup.selectAll("circle")
-        .data(stopsData)
-        .join("circle")
-        .attr("class", "stop-circle")
-        // .attr("cx", d => {
-        //     const longitude = parseFloat(d.stop_lon);
-        //     return projection(d[longitude, parseFloat(d.stop_lat)])[0];
-        // })
-        // .attr("cy", d => {
-        //     const latitude = parseFloat(d.stop_lat);
-        //     return projection([parseFloat(d.stop_lon), latitude])[1] ;
-        // })
-        .attr("cx", function(d) { 
-            // console.log(parseFloat(d.Longitude)); 
-            return parseFloat(d.Longitude * 50) })
-        .attr("cy", function(d) { return parseFloat(d.Latitude) })
-        .attr("r", 5) // Adjust the radius as needed
-        .attr("fill", "red"); // Adjust the color as needed */
-    
 }
 
 
@@ -139,12 +124,7 @@ async function drawMap() {
             // });
             return selectedRow;
         });
-    
-        // Display the selected data in the console
-        // console.log(selectedData);
-    
-        // Now you can use the 'selectedData' variable as needed in your code
-        // For example, you can pass it to a function or perform further processing
+
         return selectedData;
     });
     
@@ -174,19 +154,15 @@ async function drawMap() {
         }
     });
 
-    // Load stops data from the separate CSV file
-    try {
-
-
-                                
-        console.log(stopsData); // Log stopsData to the console
-        // var data = [{ x: 50, y: 50, radius: 20 }, { x: 150, y: 100, radius: 30 }];
-        // console.log(data); // Log stopsData to the console
-
-        // Draw stops on the map
-        drawStops(stopsData);
-    } catch (error) {
-        console.error('Error loading stops data:', error);
+    if (showStops) {
+        try {
+            console.log(stopsData); // Log stopsData to the console
+            drawStops(stopsData);
+        } catch (error) {
+            console.error('Error loading stops data:', error);
+        }
+    } else {
+        svg.select('.stops-wrap').remove(); // Remove the stops if showStops is false
     }
 
 }
