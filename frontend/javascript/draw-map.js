@@ -44,6 +44,7 @@ function initializeSVG() {
         .attr("width", svgWidth);
 
     projection = d3.geoMercator();
+    
     pathGenerator = d3.geoPath().projection(projection);
 
     svg.append('g').attr("class", 'path-wrap');
@@ -57,6 +58,8 @@ function initializeSVG() {
 
 function drawStops(stopsData) {
     const stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
+    // let proj = d3.geoEquirectangular().scale(200);
+    // projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], stopsData);
 
     stopsGroup.selectAll("circle")
         .data(stopsData)
