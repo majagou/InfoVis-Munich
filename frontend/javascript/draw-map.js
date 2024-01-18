@@ -1,11 +1,13 @@
 let svg, g, projection, pathGenerator;
 
 let showStops = false; // This variable will control the visibility of the stops
+let showWC = false;
+let showMaket = false;
 
 let layers = {
     Stadtbezirk: { data: null, isVisible: true },
-    Bezirksteile: { data: null, isVisible: false },
-    Stadtvieltel: { data: null, isVisible: false }
+    Bezirksteile: { data: null, isVisible: true },
+    Stadtvieltel: { data: null, isVisible: true }
 };
 
 async function initializeMap() {
@@ -13,6 +15,9 @@ async function initializeMap() {
     layers.Stadtbezirk.data = await d3.json("./../geo-data/formatted-Stadtbezirk.geojson");
     layers.Bezirksteile.data = await d3.json("./../geo-data/formatted-Bezirksteile.geojson");
     layers.Stadtvieltel.data = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
+    WCdata = await d3.json("./../geo-data/formatted_wc.geojson");
+    Marketdata = await d3.json("./../geo-data/formatted_market.geojson");
+
 
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
@@ -22,6 +27,8 @@ async function initializeMap() {
         showStops = !showStops; // Toggle the state
         drawMap(); // Redraw the map with the new state
     });
+    document.getElementById("AB-5").addEventListener("click", () => console.log(WCdata));
+    document.getElementById("AB-6").addEventListener("click", () => console.log(Marketdata));
     
 
     // Initialize SVG, projection, etc.
