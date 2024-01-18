@@ -47,6 +47,7 @@ function initializeSVG() {
         .attr("width", svgWidth);
 
     projection = d3.geoMercator();
+    
     pathGenerator = d3.geoPath().projection(projection);
 
     svg.append('g').attr("class", 'path-wrap');
