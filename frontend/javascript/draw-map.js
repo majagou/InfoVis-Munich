@@ -75,13 +75,10 @@ function convertStopsToGeoJSON(stopsData) {
 
 
 function drawStops(stopsData) {
-<<<<<<< HEAD
-=======
     const stopsGeoJSON = convertStopsToGeoJSON(stopsData);
     projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], stopsGeoJSON);
 
 
->>>>>>> 5e3a7c0d280830a9b216abcc509f1835b9033d54
     let stopsGroup = svg.select('.stops-wrap');
 
     // Create the group if it doesn't exist
