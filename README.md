@@ -8,15 +8,13 @@ This is an information visualisation website which was created during the course
 The theme of the website is public transport networks. A map of the network, density and cluster of various public transport networks in different major cities is gradually being created.
 
 ## Features
-- Density Map (coming soon)
-- Network Map (coming soon)
-- Cluster Map (coming soon)
-- Filter Funktion for different means of transport (coming soon)
-- Timeline (coming soon)
+- Density Map
+- Cluster Map
+- Filter Funktion for different means of transport
+- Timeline
 
 ## Cities
-- Hamburg (coming soon)
-- Munich (coming soon)
+- Munich
 
 ## Vision
 ![Alt text](<figures/Vision Screenshots/Density.png>)

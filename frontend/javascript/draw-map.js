@@ -60,18 +60,12 @@ function initializeSVG() {
 }
 
 function drawStops(stopsData) {
-<<<<<<< HEAD
-    const stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
-    // let proj = d3.geoEquirectangular().scale(200);
-    // projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], stopsData);
-=======
     let stopsGroup = svg.select('.stops-wrap');
 
     // Create the group if it doesn't exist
     if (stopsGroup.empty()) {
         stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
     }
->>>>>>> fe1a3c0cc747f251e1ce97d5da26d25e18392abe
 
     stopsGroup.selectAll("circle")
         .data(stopsData)
