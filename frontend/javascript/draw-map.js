@@ -59,7 +59,29 @@ function initializeSVG() {
     svg.call(zoom);
 }
 
+function convertStopsToGeoJSON(stopsData) {
+    return {
+        type: 'FeatureCollection',
+        features: stopsData.map(d => ({
+            type: 'Feature',
+            properties: {name: d.stop_name}, // Add any relevant properties here
+            geometry: {
+                type: 'Point',
+                coordinates: [parseFloat(d.Longitude), parseFloat(d.Latitude)]
+            }
+        }))
+    };
+}
+
+
 function drawStops(stopsData) {
+<<<<<<< HEAD
+=======
+    const stopsGeoJSON = convertStopsToGeoJSON(stopsData);
+    projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], stopsGeoJSON);
+
+
+>>>>>>> 5e3a7c0d280830a9b216abcc509f1835b9033d54
     let stopsGroup = svg.select('.stops-wrap');
 
     // Create the group if it doesn't exist
@@ -76,7 +98,6 @@ function drawStops(stopsData) {
         .attr("r", 5)
         .attr("fill", "red");
 }
-
 
 async function drawMap() {
     const g = svg.select('.path-wrap');
