@@ -1,11 +1,6 @@
 {
 "type": "FeatureCollection",
-"totalFeatures": 55,
-"numberMatched": 55,
-"numberReturned": 55,
-"timeStamp": "2024-01-18T13:38:07.066Z",
 "name": "market",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
 { "type": "Feature", "id": "maerkte_opendata.1", "geometry_name": "shape", "properties": { "inhalt": "Bauernmarkt Maxvorstadt, Pinakothek der Moderne, Öffnungszeiten: Samstag, 07:00 – 13:00", "adresse": "Barerstraße\/Gabelsbergerstraße", "link": "https:\/\/www.muenchner-bauernmaerkte.de\/", "lebenslage": "Einkaufen und Dienstleistungen", "rubrik": "Bauernmarkt", "gemeinde": "München" }, "geometry": { "type": "Point", "coordinates": [ 11.571228880048006, 48.147063026639984 ] } },
 { "type": "Feature", "id": "maerkte_opendata.2", "geometry_name": "shape", "properties": { "inhalt": "Bauernmarkt Schwabing,Öffnungszeiten: Samstag, 07:00 – 13:00", "adresse": "Fritz-Hommel-Weg ", "link": "https:\/\/www.muenchner-bauernmaerkte.de\/", "lebenslage": "Einkaufen und Dienstleistungen", "rubrik": "Bauernmarkt", "gemeinde": "München" }, "geometry": { "type": "Point", "coordinates": [ 11.594700909577275, 48.172871776921511 ] } },

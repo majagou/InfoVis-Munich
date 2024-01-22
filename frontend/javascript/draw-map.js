@@ -1,70 +1,17 @@
 let svg, g, projection, pathGenerator;
 
-let showStops = false; // This variable will control the visibility of the stops
+/* let showStops = false; // This variable will control the visibility of the stops
 let showWC = false;
-let showMaket = false;
+let showMaket = false; */
 
 let layers = {
     Stadtbezirk: { data: null, isVisible: true },
     Bezirksteile: { data: null, isVisible: true },
-    Stadtvieltel: { data: null, isVisible: true }
+    Stadtvieltel: { data: null, isVisible: true },
+    Stop: { data: null, isVisible: false },
+    WC: { data: null, isVisible: false },
+    Market: { data: null, isVisible: false }
 };
-
-async function initializeMap() {
-    // Load geojson data
-    layers.Stadtbezirk.data = await d3.json("./../geo-data/formatted-Stadtbezirk.geojson");
-    layers.Bezirksteile.data = await d3.json("./../geo-data/formatted-Bezirksteile.geojson");
-    layers.Stadtvieltel.data = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
-    WCdata = await d3.json("./../geo-data/formatted_wc.geojson");
-    Marketdata = await d3.json("./../geo-data/formatted_market.geojson");
-
-
-    // Setup event listeners for buttons
-    document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
-    document.getElementById("AB-2").addEventListener("click", () => toggleLayer('Bezirksteile'));
-    document.getElementById("AB-3").addEventListener("click", () => toggleLayer('Stadtvieltel'));
-    document.getElementById("AB-4").addEventListener("click", () => {
-        showStops = !showStops; // Toggle the state
-        drawMap(); // Redraw the map with the new state
-    });
-    document.getElementById("AB-5").addEventListener("click", () => console.log(WCdata));
-    document.getElementById("AB-6").addEventListener("click", () => console.log(Marketdata));
-    
-
-    // Initialize SVG, projection, etc.
-    initializeSVG();
-
-    // Draw the initial state of the map
-    drawMap();
-    
-}
-
-function toggleLayer(layerName) {
-    layers[layerName].isVisible = !layers[layerName].isVisible;
-    drawMap();
-}
-
-function initializeSVG() {
-    const svgWidth = window.innerWidth;
-    const svgHeight = window.innerHeight;
-
-    svg = d3.select(".VisSVG")
-        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
-        .attr("height", svgHeight)
-        .attr("width", svgWidth);
-
-    projection = d3.geoMercator();
-    
-    pathGenerator = d3.geoPath().projection(projection);
-
-    svg.append('g').attr("class", 'path-wrap');
-
-    // Define and apply zoom behavior
-    const zoom = d3.zoom()
-        .scaleExtent([1, 8])
-        .on("zoom", event => svg.select('.path-wrap').attr("transform", event.transform));
-    svg.call(zoom);
-}
 
 function convertStopsToGeoJSON(stopsData) {
     return {
@@ -80,35 +27,31 @@ function convertStopsToGeoJSON(stopsData) {
     };
 }
 
+async function initializeMap() {
+    // Load geojson data
+    layers.Stadtbezirk.data = await d3.json("./../geo-data/formatted-Stadtbezirk.geojson");
 
-function drawStops(stopsData) {
-    const stopsGeoJSON = convertStopsToGeoJSON(stopsData);
-    projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], stopsGeoJSON);
+    layers.Stadtbezirk.data.features = layers.Stadtbezirk.data.features.map(function (feature) {
+        return turf.rewind(feature, { reverse: true });
+    });
 
+    layers.Bezirksteile.data = await d3.json("./../geo-data/formatted-Bezirksteile.geojson");
 
-    let stopsGroup = svg.select('.stops-wrap');
+    layers.Bezirksteile.data.features = layers.Bezirksteile.data.features.map(function (feature) {
+        return turf.rewind(feature, { reverse: true });
+    });
 
-    // Create the group if it doesn't exist
-    if (stopsGroup.empty()) {
-        stopsGroup = svg.select('.path-wrap').append('g').attr("class", 'stops-wrap');
-    }
+    layers.Stadtvieltel.data = await d3.json("./../geo-data/formatted-Stadtvieltel.geojson");
 
-    stopsGroup.selectAll("circle")
-        .data(stopsData)
-        .join("circle")
-        .attr("class", "stop-circle")
-        .attr("cx", d => projection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[0])
-        .attr("cy", d => projection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[1])
-        .attr("r", 5)
-        .attr("fill", "red");
-}
+    layers.Stadtvieltel.data.features = layers.Stadtvieltel.data.features.map(function (feature) {
+        return turf.rewind(feature, { reverse: true });
+    });
 
-async function drawMap() {
-    const g = svg.select('.path-wrap');
-    g.selectAll('*').remove(); // Clear existing layers
+    layers.WC.data = await d3.json("./../geo-data/formatted_wc.geojson");
+    layers.Market.data = await d3.json("./../geo-data/formatted_market.geojson");
+
     var selectedColumns = ["stop_name", "Longitude", "Latitude"];
-
-    const stopsData = await d3.csv("./../stops_modified.csv").then(function(data) {
+    const Stopsdata = await d3.csv("./../stops_modified.csv").then(function(data) {
         // Create a new array with only the selected columns
         var selectedData = data.map(function(row) {
             var selectedRow = {};
@@ -153,44 +96,91 @@ async function drawMap() {
 
         return selectedData;
     });
+    layers.Stop.data = convertStopsToGeoJSON(Stopsdata);
+    console.log(layers.Stop.data);
+
+
+    // Setup event listeners for buttons
+    document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
+    document.getElementById("AB-2").addEventListener("click", () => toggleLayer('Bezirksteile'));
+    document.getElementById("AB-3").addEventListener("click", () => toggleLayer('Stadtvieltel'));
+    document.getElementById("AB-4").addEventListener("click", () => toggleLayer('Stop'));
+    document.getElementById("AB-5").addEventListener("click", () => toggleLayer('WC'));
+    document.getElementById("AB-6").addEventListener("click", () => toggleLayer('Market'));
+    
+
+    // Initialize SVG, projection, etc.
+    initializeSVG();
+
+    // Draw the initial state of the map
+    drawMap();
+    
+}
+
+function toggleLayer(layerName) {
+    layers[layerName].isVisible = !layers[layerName].isVisible;
+    drawMap();
+}
+
+function initializeSVG() {
+    const svgWidth = window.innerWidth;
+    const svgHeight = window.innerHeight;
+
+    svg = d3.select(".VisSVG")
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
+        .attr("height", svgHeight)
+        .attr("width", svgWidth);
+
+    projection = d3.geoMercator();
+    
+    pathGenerator = d3.geoPath().projection(projection);
+
+    svg.append('g').attr("class", 'path-wrap');
+
+    // Define and apply zoom behavior
+    const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on("zoom", event => svg.select('.path-wrap').attr("transform", event.transform));
+    svg.call(zoom);
+}
+
+async function drawMap() {
+    const g = svg.select('.path-wrap');
+    g.selectAll('*').remove(); // Clear existing layers
     
     Object.keys(layers).forEach(layerName => {
         if (layers[layerName].isVisible && layers[layerName].data) {
             let data = layers[layerName].data;
-                    // Apply turf.rewind to each feature
-            data.features = data.features.map(function (feature) {
-                return turf.rewind(feature, { reverse: true });
-            });
+            console.log('Data for layer', layerName, data);     
+            projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], layers.Stadtbezirk.data);   
 
-            projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], data);
-
-            // Draw layer with specific style
-            g.selectAll("path." + layerName)
-                .data(data.features || [])
-                .join("path")
-                .attr("class", layerName)  // Assign class for styling
-                .attr("d", pathGenerator)
-                .attr("stroke-width", layerStyles[layerName].strokeWidth)
-                .attr("stroke", layerStyles[layerName].strokeColor)
-                .attr("fill", layerStyles[layerName].fillColor)
-                .on("click", onPolygonClick)
-                .on("mouseout", function() {
-                    document.getElementById('tooltip').style.visibility = 'hidden';
-                });
+            if (["Bezirksteile", "Stadtvieltel", "Stadtbezirk"].includes(layerName)) {
+    
+                g.selectAll("path." + layerName)
+                    .data(data.features || [])
+                    .join("path")
+                    .attr("class", layerName)
+                    .attr("d", pathGenerator)
+                    .attr("stroke-width", layerStyles[layerName].strokeWidth)
+                    .attr("stroke", layerStyles[layerName].strokeColor)
+                    .attr("fill", layerStyles[layerName].fillColor)
+                    .on("click", onPolygonClick)
+                    .on("mouseout", function() {
+                        document.getElementById('tooltip').style.visibility = 'hidden';
+                    });
+            } else if (["WC", "Market", "Stop"].includes(layerName)) {
+                // Assuming these layers are point data and already in GeoJSON format
+                g.selectAll("circle." + layerName)
+                    .data(data.features || [])
+                    .join("circle")
+                    .attr("class", layerName)
+                    .attr("cx", d => projection(d.geometry.coordinates)[0])
+                    .attr("cy", d => projection(d.geometry.coordinates)[1])
+                    .attr("r", 5) // Customize radius
+                    .attr("fill", layerStyles[layerName].fillColor); // Customize fill color
+            } 
         }
     });
-
-    if (showStops) {
-        try {
-            console.log(stopsData); // Log stopsData to the console
-            drawStops(stopsData);
-        } catch (error) {
-            console.error('Error loading stops data:', error);
-        }
-    } else {
-        svg.select('.stops-wrap').remove(); // Remove the stops if showStops is false
-    }
-
 }
 
 let isInfoEnabled = false; // Default state
@@ -237,7 +227,10 @@ function onPolygonClick(event) {
 const layerStyles = {
     Stadtbezirk: { strokeWidth: 6, strokeColor: "#ff0000", fillColor: "transparent"},
     Bezirksteile: { strokeWidth: 3, strokeColor: "#00ff00", fillColor: "transparent" },
-    Stadtvieltel: { strokeWidth: 1, strokeColor: "#0000ff", fillColor: "transparent" }
+    Stadtvieltel: { strokeWidth: 1, strokeColor: "#0000ff", fillColor: "transparent" },
+    Stop: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
+    WC: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
+    Market: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
 };
 
 // Resize event listener
