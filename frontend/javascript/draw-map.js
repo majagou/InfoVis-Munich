@@ -49,56 +49,58 @@ async function initializeMap() {
 
     layers.WC.data = await d3.json("./../geo-data/formatted_wc.geojson");
     layers.Market.data = await d3.json("./../geo-data/formatted_market.geojson");
+    layers.Stop.data = await d3.csv("./../muc.csv");
+}
+    // var selectedColumns = ["stop_name", "Longitude", "Latitude"];
+    // const Stopsdata = await d3.csv("./../stops_modified.csv").then(function(data) {
+    //     // Create a new array with only the selected columns
+    //     var selectedData = data.map(function(row) {
+    //         var selectedRow = {};
+    //         if (isNaN(parseFloat(row.Latitude)) && !(isNaN(parseFloat(row.Longitude)))){
+    //             // console.log(row.Latitude)
 
-    var selectedColumns = ["stop_name", "Longitude", "Latitude"];
-    const Stopsdata = await d3.csv("./../stops_modified.csv").then(function(data) {
-        // Create a new array with only the selected columns
-        var selectedData = data.map(function(row) {
-            var selectedRow = {};
-            if (isNaN(parseFloat(row.Latitude)) && !(isNaN(parseFloat(row.Longitude)))){
-                // console.log(row.Latitude)
+    //             row.Latitude = row.Longitude;
+    //             // delete row.Longitude;
+    //             row.Longitude = row.location_type;
+    //             // delete row.location_type;
 
-                row.Latitude = row.Longitude;
-                // delete row.Longitude;
-                row.Longitude = row.location_type;
-                // delete row.location_type;
+    //             selectedColumns.forEach(function(column) {
 
-                selectedColumns.forEach(function(column) {
-
-                    selectedRow[column] = row[column];
-                });
+    //                 selectedRow[column] = row[column];
+    //             });
 
                 
-            } else if(isNaN(parseFloat(row.Latitude)) && isNaN(parseFloat(row.Longitude))){ 
-                row.Latitude = row.location_type;
-                // delete row.Longitude;
-                row.Longitude = row.parent_station;
-                // delete row.location_type;
+    //         } else if(isNaN(parseFloat(row.Latitude)) && isNaN(parseFloat(row.Longitude))){ 
+    //             row.Latitude = row.location_type;
+    //             // delete row.Longitude;
+    //             row.Longitude = row.parent_station;
+    //             // delete row.location_type;
 
-                selectedColumns.forEach(function(column) {
+    //             selectedColumns.forEach(function(column) {
 
-                    selectedRow[column] = row[column];
-                });
-            }
-            else{
-                // console.log(row.Latitude)
-                selectedColumns.forEach(function(column) {
+    //                 selectedRow[column] = row[column];
+    //             });
+    //         }
+    //         else{
+    //             // console.log(row.Latitude)
+    //             selectedColumns.forEach(function(column) {
 
-                    selectedRow[column] = row[column];
-                });
-            }
-            // selectedColumns.forEach(function(column) {
+    //                 selectedRow[column] = row[column];
+    //             });
+    //         }
+    //         // selectedColumns.forEach(function(column) {
 
-            //     selectedRow[column] = row[column];
-            // });
-            return selectedRow;
-        });
+    //         //     selectedRow[column] = row[column];
+    //         // });
+    //         return selectedRow;
+    //     });
 
-        return selectedData;
-    });
-    layers.Stop.data = convertStopsToGeoJSON(Stopsdata);
-    console.log(layers.Stop.data);
+    //     return selectedData;
+    // });
+    // //layers.Stop.data = convertStopsToGeoJSON(Stopsdata);
+    // console.log(layers.Stop.data);
 
+    // layers.Stop.data = convertStopsToGeoJSON(stopsData);
 
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
@@ -115,7 +117,7 @@ async function initializeMap() {
     // Draw the initial state of the map
     drawMap();
     
-}
+
 
 function toggleLayer(layerName) {
     layers[layerName].isVisible = !layers[layerName].isVisible;
@@ -180,6 +182,29 @@ async function drawMap() {
                     .attr("fill", layerStyles[layerName].fillColor); // Customize fill color
             } 
         }
+
+        if (layers["Stop"].isVisible && layers["Stop"].data) {
+            g.selectAll("circle.stop")
+                .data(layers.Stop.data)
+                .join("circle")
+                .attr("class", "stop")
+                .attr("cx", d => {
+                    if (!isNaN(+d.Longitude) && !isNaN(+d.Latitude)) {
+                        return projection([+d.Longitude, +d.Latitude])[0];
+                    }
+                    return 0; // Default value in case of invalid data
+                })
+                .attr("cy", d => {
+                    if (!isNaN(+d.Longitude) && !isNaN(+d.Latitude)) {
+                        return projection([+d.Longitude, +d.Latitude])[1];
+                    }
+                    return 0; // Default value in case of invalid data
+                })
+                
+                .attr("r", 5) // Customize radius
+                .attr("fill", "red"); // Customize fill color
+        }
+        
     });
 }
 
