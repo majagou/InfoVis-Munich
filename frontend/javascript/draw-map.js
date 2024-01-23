@@ -49,7 +49,7 @@ async function initializeMap() {
 
     layers.WC.data = await d3.json("./../geo-data/formatted_wc.geojson");
     layers.Market.data = await d3.json("./../geo-data/formatted_market.geojson");
-    layers.Stop.data = await d3.csv("./../muc.csv");
+    layers.Stop.data = await d3.csv("./../m.csv");
 }
     // var selectedColumns = ["stop_name", "Longitude", "Latitude"];
     // const Stopsdata = await d3.csv("./../stops_modified.csv").then(function(data) {
