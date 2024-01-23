@@ -48,10 +48,10 @@ async function initializeMap() {
 
     layers.WC.data = await d3.json("./../geo-data/formatted_wc.geojson");
     layers.Market.data = await d3.json("./../geo-data/formatted_market.geojson");
-    const Stopdata = await d3.dsv(";", "./../m.csv");
-    console.log(Stopdata)
+    const Stopdata = await d3.dsv(";", "./../csv-data/m.csv");
+    //console.log(Stopdata)
     layers.Stop.data = convertStopsToGeoJSON(Stopdata);
-    console.log(layers.Stop.data);
+    //console.log(layers.Stop.data);
 
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
