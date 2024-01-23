@@ -1,4 +1,4 @@
-HstNummer;Name ohne Ort;Ort;Globale ID;WGS84 X;WGS84 Y
+HstNummer;stop_name;Ort;Globale ID;Latitude;Longitude
 1;Karlsplatz (Stachus);München;de:09162:1;48,1393653703985;11,5653864723266
 2;Marienplatz;München;de:09162:2;48,1364342160178;11,5776511503947
 3;Isartor;München;de:09162:3;48,1338899412007;11,5828176253145
