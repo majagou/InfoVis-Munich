@@ -1,9 +1,5 @@
 let svg, g, projection, pathGenerator;
 
-/* let showStops = false; // This variable will control the visibility of the stops
-let showWC = false;
-let showMaket = false; */
-
 let layers = {
     Stadtbezirk: { data: null, isVisible: true },
     Bezirksteile: { data: null, isVisible: true },
@@ -13,15 +9,18 @@ let layers = {
     Market: { data: null, isVisible: false }
 };
 
-function convertStopsToGeoJSON(stopsData) {
+function convertStopsToGeoJSON(Data) {
     return {
         type: 'FeatureCollection',
-        features: stopsData.map(d => ({
+        features: Data.map(d => ({
             type: 'Feature',
-            properties: {name: d.stop_name}, // Add any relevant properties here
+            properties: { name: d.stop_name, id: d.HstNummer }, // Adjust the property name if needed
             geometry: {
                 type: 'Point',
-                coordinates: [parseFloat(d.Longitude), parseFloat(d.Latitude)]
+                coordinates: [
+                    parseFloat(d.Longitude.replace(',', '.')), 
+                    parseFloat(d.Latitude.replace(',', '.'))
+                ]
             }
         }))
     };
@@ -49,58 +48,10 @@ async function initializeMap() {
 
     layers.WC.data = await d3.json("./../geo-data/formatted_wc.geojson");
     layers.Market.data = await d3.json("./../geo-data/formatted_market.geojson");
-    layers.Stop.data = await d3.csv("./../m.csv");
-}
-    // var selectedColumns = ["stop_name", "Longitude", "Latitude"];
-    // const Stopsdata = await d3.csv("./../stops_modified.csv").then(function(data) {
-    //     // Create a new array with only the selected columns
-    //     var selectedData = data.map(function(row) {
-    //         var selectedRow = {};
-    //         if (isNaN(parseFloat(row.Latitude)) && !(isNaN(parseFloat(row.Longitude)))){
-    //             // console.log(row.Latitude)
-
-    //             row.Latitude = row.Longitude;
-    //             // delete row.Longitude;
-    //             row.Longitude = row.location_type;
-    //             // delete row.location_type;
-
-    //             selectedColumns.forEach(function(column) {
-
-    //                 selectedRow[column] = row[column];
-    //             });
-
-                
-    //         } else if(isNaN(parseFloat(row.Latitude)) && isNaN(parseFloat(row.Longitude))){ 
-    //             row.Latitude = row.location_type;
-    //             // delete row.Longitude;
-    //             row.Longitude = row.parent_station;
-    //             // delete row.location_type;
-
-    //             selectedColumns.forEach(function(column) {
-
-    //                 selectedRow[column] = row[column];
-    //             });
-    //         }
-    //         else{
-    //             // console.log(row.Latitude)
-    //             selectedColumns.forEach(function(column) {
-
-    //                 selectedRow[column] = row[column];
-    //             });
-    //         }
-    //         // selectedColumns.forEach(function(column) {
-
-    //         //     selectedRow[column] = row[column];
-    //         // });
-    //         return selectedRow;
-    //     });
-
-    //     return selectedData;
-    // });
-    // //layers.Stop.data = convertStopsToGeoJSON(Stopsdata);
-    // console.log(layers.Stop.data);
-
-    // layers.Stop.data = convertStopsToGeoJSON(stopsData);
+    const Stopdata = await d3.dsv(";", "./../m.csv");
+    console.log(Stopdata)
+    layers.Stop.data = convertStopsToGeoJSON(Stopdata);
+    console.log(layers.Stop.data);
 
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
@@ -116,8 +67,8 @@ async function initializeMap() {
 
     // Draw the initial state of the map
     drawMap();
-    
 
+}
 
 function toggleLayer(layerName) {
     layers[layerName].isVisible = !layers[layerName].isVisible;
@@ -153,7 +104,7 @@ async function drawMap() {
     Object.keys(layers).forEach(layerName => {
         if (layers[layerName].isVisible && layers[layerName].data) {
             let data = layers[layerName].data;
-            console.log('Data for layer', layerName, data);     
+    
             projection.fitExtent([[0, 0], [window.innerWidth, window.innerHeight]], layers.Stadtbezirk.data);   
 
             if (["Bezirksteile", "Stadtvieltel", "Stadtbezirk"].includes(layerName)) {
@@ -178,33 +129,17 @@ async function drawMap() {
                     .attr("class", layerName)
                     .attr("cx", d => projection(d.geometry.coordinates)[0])
                     .attr("cy", d => projection(d.geometry.coordinates)[1])
-                    .attr("r", 5) // Customize radius
-                    .attr("fill", layerStyles[layerName].fillColor); // Customize fill color
+                    .attr("r", 3) // Customize radius
+                    .attr("stroke-width", layerStyles[layerName].strokeWidth)
+                    .attr("stroke", layerStyles[layerName].strokeColor)
+                    .attr("fill", layerStyles[layerName].fillColor)
+                    .on("click", onPolygonClick)
+                    .on("mouseout", function() {
+                        document.getElementById('tooltip').style.visibility = 'hidden';
+                    }); // Customize fill color
             } 
         }
 
-        if (layers["Stop"].isVisible && layers["Stop"].data) {
-            g.selectAll("circle.stop")
-                .data(layers.Stop.data)
-                .join("circle")
-                .attr("class", "stop")
-                .attr("cx", d => {
-                    if (!isNaN(+d.Longitude) && !isNaN(+d.Latitude)) {
-                        return projection([+d.Longitude, +d.Latitude])[0];
-                    }
-                    return 0; // Default value in case of invalid data
-                })
-                .attr("cy", d => {
-                    if (!isNaN(+d.Longitude) && !isNaN(+d.Latitude)) {
-                        return projection([+d.Longitude, +d.Latitude])[1];
-                    }
-                    return 0; // Default value in case of invalid data
-                })
-                
-                .attr("r", 5) // Customize radius
-                .attr("fill", "red"); // Customize fill color
-        }
-        
     });
 }
 
