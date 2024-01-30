@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobility Nav</title>
     <link rel="stylesheet" href="./../frontend/css/style.css">
+    <link rel="stylesheet" href="./../frontend/css/density.css">
+    <link rel="stylesheet" href="./../frontend/css/cluster.css">
+    <script src="./../d3.v7.js"></script>
     <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 </head>
 <body>
-    <div id="content">
-        <img id="displayedImage" src="./../figures/sampleImage.jpg" alt="Displayed Image">
-    </div>
     <main>
         <div id="title">
             <h1>
@@ -23,42 +24,56 @@
                 <h2>Mode</h2>
                 <a href="./../frontend/index.html">
                     <i class="fa fa-fw fa-user-circle"></i>
-                    <button class="sidebar-btn">Density</button>
+                    <button class="sidebar-btn">Mobility</button>
                 </a>
                 <a href="./../frontend/cluster.html">
                     <i class="fa fa-fw fa-magnet"></i>
-                    <button class="sidebar-btn">Cluster</button>
+                    <button class="sidebar-btn">Timeline</button>
                 </a>
             </div>
-            <div class="flex-column flex-center" id="accordion">
-    
-                <button class="accordion-btn">Cities</button>
-                <div class="panel">
-                    <p>Munich</p>
-                    <p>Hamburg</p>
-                </div>
-    
-                <button class="accordion-btn">Travel Plan</button>
-                <div class="panel">
-                    <p>Day</p>
-                    <p>Night</p>
-                </div>
-    
-                <button class="accordion-btn">Transportations</button>
-                <div class="panel">
-                    <p>S-Bahn</p>
-                    <p>U-Bahn</p>
-                    <p>Tram</p>
-                    <p>Bus</p>
+            <div id="wrapper" class="flex-center">
+                <svg class="VisSVG flex-center"></svg>
+            </div>
+            <div id="slider-container">
+                <div class="range">
+                    <div class="range-slider">
+                        <label for="range">Select a year:</label><br />
+                        <input
+                        type="range"
+                        min="2012"
+                        max="2022"
+                        value="2012"
+                        id="range"
+                        list="Jahr"
+                        step="1"
+                        />
+                        <div class="sliderticks">
+                            <span>2012</span>
+                            <span>2013</span>
+                            <span>2014</span>
+                            <span>2015</span>
+                            <span>2016</span>
+                            <span>2017</span>
+                            <span>2018</span>
+                            <span>2019</span>
+                            <span>2020</span>
+                            <span>2021</span>
+                            <span>2022</span>
+                        </div>
+                    </div>
+
+                    <div class="value">2018</div>
+
                 </div>
             </div>
+            <div id="tooltip"></div>
         </div>
     </main>
 
     <footer>
         <p>&copy; Group 28 InfoVis</p>
     </footer>
-
     <script src="./../frontend/javascript/data.js"></script>
+    <script src="./../frontend/javascript/cluster.js"></script>
 </body>
 </html>

@@ -9,6 +9,8 @@ let layers = {
     Market: { data: null, isVisible: false }
 };
 
+const iconSize = 25;
+
 schemes = [
     {
       name: "RdBu", 
@@ -44,9 +46,7 @@ schemes = [
     }
 ]
 
-let selectedScheme = schemes.find(scheme => scheme.name === "RdBu").colors;
-
-labels = ["low", "medium", "high"]
+let selectedScheme = schemes.find(scheme => scheme.name === "PuOr").colors;
 
 // Thresholds for population categories(Based on the top and bottom value)
 const populationThresholds = [59181, 89376];
@@ -57,13 +57,14 @@ const densityThresholds = [6313, 11022];
 const svgWidth = window.innerWidth;
 const svgHeight = window.innerHeight;
 
-const legendWidth = 150;
-const legendHeight = 150;
-const legendMargin = { top: 20, right: 20, bottom: 20, left: 20 }; // Increased top margin
-
-// Calculate position
-const legendX = svgWidth - legendWidth - legendMargin.right;
-const legendY = legendMargin.top;
+const k = 0.04*svgHeight; // Size of each square in the legend
+const n = 3; // Number of categories (low, medium, high)
+const labels = ["Low", "Medium", "High"]; // Labels for categories
+const colors = [
+    "#9972af", "#976b82", "#804d36",
+    "#cbb8d7", "#c8ada0", "#af8e53",
+    "#e8e8e8", "#e4d9ac", "#c8b35a"
+  ];
 
 function convertStopsToGeoJSON(Data) {
     return {
@@ -145,6 +146,8 @@ async function initializeMap() {
     // Initialize SVG, projection, etc.
     initializeSVG();
 
+    createLegend(d3.select("svg"));
+
     // Draw the initial state of the map
     drawMap();
 
@@ -195,6 +198,72 @@ function initializeSVG() {
     svg.call(zoom);
 }
 
+function createLegend(svg) {
+    const arrow = svg.append("defs").append("marker")
+      .attr("id", "arrow")
+      .attr("viewBox", "0 0 10 10")
+      .attr("refX", "5")
+      .attr("refY", "5")
+      .attr("markerWidth", "6")
+      .attr("markerHeight", "6")
+      .attr("orient", "auto-start-reverse")
+      .append("path")
+      .attr("d", "M 0 0 L 10 5 L 0 10 z")
+      .attr("fill", "black");
+  
+    const legend = svg.append("g")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "14")
+      .attr("text-anchor", "middle")
+      .attr("transform", `translate(${0.2*svgWidth}, ${0.8*svgHeight})`);
+  
+    // Draw the color squares
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        legend.append("rect")
+          .attr("width", k)
+          .attr("height", k)
+          .attr("x", i * k)
+          .attr("y", j * k)
+          .attr("fill", colors[j * n + i]);
+      }
+    }
+  
+    // Add arrows
+    legend.append("line")
+      .attr("x1", 0)
+      .attr("y1", n * k)
+      .attr("x2", n * k)
+      .attr("y2", n * k)
+      .attr("stroke", "#051747")
+      .attr("stroke-width", 1.5)
+      .attr("marker-end", "url(#arrow)");
+  
+    legend.append("line")
+      .attr("x2", 0)
+      .attr("y2", 0)
+      .attr("x1", 0)
+      .attr("y1", n * k)
+      .attr("stroke", "#051747")
+      .attr("stroke-width", 1.5)
+      .attr("marker-end", "url(#arrow)");
+  
+    // Add axis labels
+    legend.append("text")
+      .attr("transform", `translate(${-k / 2},${n * k / 2}) rotate(-90)`)
+      .attr("fill", "#051747")
+      .attr("font-size", "16px")
+      .attr("font-weight", "600")
+      .text("Population");
+  
+    legend.append("text")
+      .attr("transform", `translate(${n * k / 2},${n * k + 20})`)
+      .attr("fill", "#051747")
+      .attr("font-size", "16px")
+      .attr("font-weight", "600")
+      .text("Population Density");
+}  
+
 async function drawMap() {
     const g = svg.select('.path-wrap');
     g.selectAll('*').remove(); // Clear existing layers
@@ -217,57 +286,6 @@ async function drawMap() {
                     .attr("fill", layerStyles[layerName].fillColor)
             } else if (layerName === "Stadtbezirk") {
 
-                // Create legend group with new position
-                const legend = svg.append("g")
-                    .attr("id", "legend")
-                    .attr("transform", `translate(${legendX}, ${legendY})`);
-
-                const categories = 3; // Since you have low, medium, high
-                const rectSize = (legendWidth - legendMargin.left - legendMargin.right) / categories;
-
-                for (let i = 0; i < categories; i++) {
-                    for (let j = 0; j < categories; j++) {
-                        legend.append("rect")
-                            .attr("x", j * rectSize)
-                            .attr("y", i * rectSize)
-                            .attr("width", rectSize)
-                            .attr("height", rectSize)
-                            .attr("fill", selectedScheme[i * categories + j]);
-                    }
-                }
-
-                // Horizontal arrow (population density)
-                legend.append("path")
-                    .attr("d", "M0,5 L" + (legendWidth - 10) + ",5 L" + (legendWidth - 10) + ",0 L" + legendWidth + ",5 L" + (legendWidth - 15) + ",10")
-                    .attr("transform", `translate(${0}, ${0 - legendMargin.top / 2})`)
-                    .attr("fill", "none")
-                    .attr("stroke", "#333")
-                    .attr("stroke-width", "2");
-
-                // Vertical arrow (population)
-                legend.append("path")
-                    .attr("d", "M5,0 L5," + (legendHeight - 10) + " L0," + (legendHeight - 15) + " L5," + legendHeight + " L10," + (legendHeight - 15))
-                    .attr("transform", `translate(${0 - legendMargin.left / 2}, ${0})`)
-                    .attr("fill", "none")
-                    .attr("stroke", "#333")
-                    .attr("stroke-width", "2");
-
-                legend.append("text")
-                    .attr("class", "axis-label")
-                    .attr("transform", "rotate(-90)") // Rotate text for vertical axis
-                    .attr("y", 0 - legendMargin.left)
-                    .attr("x", 0 - (legendHeight / 2))
-                    .attr("dy", "1em") // Adjust for positioning
-                    .style("text-anchor", "middle")
-                    .text("Population");
-
-                legend.append("text")
-                    .attr("class", "axis-label")
-                    .attr("x", legendWidth / 2)
-                    .attr("y", 0) // Adjust this value as needed
-                    .style("text-anchor", "middle")
-                    .text("Population Density");  
-
                 // Draw Stadtbezirk and add hover event listeners
                 g.selectAll("path." + layerName)
                     .data(data.features || [])
@@ -285,25 +303,36 @@ async function drawMap() {
                     .on("mouseover", onPolygonHover)  // Using mouseover event
                     .on("mouseout", onPolygonMouseout); // Using mouseout event
             }else if (["WC", "Market", "Stop"].includes(layerName)) {
-
-                g.selectAll("circle." + layerName)
+                g.selectAll("image." + layerName)
                     .data(data.features || [])
-                    .join("circle")
+                    .join("image")
                     .attr("class", layerName)
-                    .attr("cx", d => projection(d.geometry.coordinates)[0])
-                    .attr("cy", d => projection(d.geometry.coordinates)[1])
-                    .attr("r", 3) // Customize radius
-                    .attr("stroke-width", layerStyles[layerName].strokeWidth)
-                    .attr("stroke", layerStyles[layerName].strokeColor)
-                    .attr("fill", layerStyles[layerName].fillColor)
-                    .on("click", onPolygonClick)
+                    .attr("x", d => projection(d.geometry.coordinates)[0] - iconSize / 2) // Centering the icon
+                    .attr("y", d => projection(d.geometry.coordinates)[1] - iconSize / 2) // Centering the icon
+                    .attr("width", iconSize) // Set icon size
+                    .attr("height", iconSize) // Set icon size
+                    .attr("xlink:href", getIconUrl(layerName)) // Function to get the icon URL
+                    .on("mouseover", onPolygonClick) // Assuming you want to keep this event
                     .on("mouseout", function() {
                         document.getElementById('tooltip').style.visibility = 'hidden';
-                    }); // Customize fill color
-            } 
+                    });
+            }
         }
 
     });
+}
+
+function getIconUrl(layerName) {
+    switch (layerName) {
+        case "WC":
+            return "./../icon/pointer.png";
+        case "Market":
+            return "./../icon/shopping-cart.png";
+        case "Stop":
+            return "./../icon/location.png";
+        default:
+            return "";
+    }
 }
 
 function getPopulationCategoryLabel(population) {
@@ -386,7 +415,7 @@ function onPolygonClick(event) {
     let tooltipContent = '';
 
     if (name) { // Check if 'name' is defined and not null
-        tooltipContent += `Name: ${name}<br>`; // Add 'Name' to the content
+        tooltipContent += `Stop Name: ${name}<br>`; // Add 'Name' to the content
     }
 
     if (area) { // Similarly, you can check for 'area' if needed
@@ -407,9 +436,9 @@ function onPolygonClick(event) {
 
 
 const layerStyles = {
-    Stadtbezirk: { strokeWidth: 4, strokeColor: "white", fillColor: "transparent"},
-    Bezirksteile: { strokeWidth: 3, strokeColor: "#00ff00", fillColor: "transparent" },
-    Stadtvieltel: { strokeWidth: 1, strokeColor: "#0000ff", fillColor: "transparent" },
+    Stadtbezirk: { strokeWidth: 5, strokeColor: "#fefefe", fillColor: "transparent"},
+    Bezirksteile: { strokeWidth: 3, strokeColor: "#fce786", fillColor: "transparent" },
+    Stadtvieltel: { strokeWidth: 1, strokeColor: "#081f62", fillColor: "transparent" },
     Stop: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
     WC: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
     Market: { strokeWidth: 1, strokeColor: "white", fillColor: "red" },
