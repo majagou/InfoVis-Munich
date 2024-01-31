@@ -9,7 +9,7 @@ let layers = {
     Market: { data: null, isVisible: false }
 };
 
-const iconSize = 25;
+const iconSize = 35;
 
 schemes = [
     {
@@ -302,7 +302,7 @@ async function drawMap() {
                     })
                     .on("mouseover", onPolygonHover)  // Using mouseover event
                     .on("mouseout", onPolygonMouseout); // Using mouseout event
-            }else if (["WC", "Market", "Stop"].includes(layerName)) {
+            }else if (["WC", "Market","Stop"].includes(layerName)) {
                 g.selectAll("image." + layerName)
                     .data(data.features || [])
                     .join("image")
@@ -317,6 +317,8 @@ async function drawMap() {
                         document.getElementById('tooltip').style.visibility = 'hidden';
                     });
             }
+
+        
         }
 
     });
