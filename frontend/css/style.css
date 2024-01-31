@@ -10,6 +10,44 @@
     margin: 0;
     padding: 0;
 }
+html {
+    scroll-behavior: smooth;
+  }
+  
+  .description-page {
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.description-page p {
+    overflow: hidden; /* Ensures the content is clipped */
+    border-right: .15em solid black; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as typing */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+      typewriter 4s steps(40) 1s 1 normal both,
+      blinkTextCursor 500ms steps(40) infinite normal;
+}
+
+@keyframes blinkTextCursor {
+    from { border-right-color: black; }
+    to { border-right-color: transparent; }
+}
+
+.description-page h1 {
+    animation: fadeIn 2s ease 2s 1 normal both;
+}
 
 h1 {
     color: #535F80;
