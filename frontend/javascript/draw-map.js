@@ -6,10 +6,13 @@ let layers = {
     Stadtvieltel: { data: null, isVisible: false },
     Stop: { data: null, isVisible: false },
     WC: { data: null, isVisible: false },
-    Market: { data: null, isVisible: false }
+    Market: { data: null, isVisible: false },
+    Mobile: { data: null, isVisible: false },
+    MainStation: { data: null, isVisible: false }
 };
 
 const iconSize = 35;
+const SiconSize = 15;
 
 schemes = [
     {
@@ -110,6 +113,9 @@ async function initializeMap() {
     layers.Stop.data = convertStopsToGeoJSON(Stopdata);
     //console.log(layers.Stop.data);
 
+    layers.Mobile.data = await d3.json("./../geo-data/Mobilitat.geojson")
+    layers.MainStation.data = await d3.json("./../geo-data/TrafficStation.geojson")
+
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
     document.getElementById("AB-2").addEventListener("click", () => toggleLayer('Bezirksteile'));
@@ -117,6 +123,8 @@ async function initializeMap() {
     document.getElementById("AB-4").addEventListener("click", () => toggleLayer('Stop'));
     document.getElementById("AB-5").addEventListener("click", () => toggleLayer('WC'));
     document.getElementById("AB-6").addEventListener("click", () => toggleLayer('Market'));
+    document.getElementById("AB-7").addEventListener("click", () => toggleLayer('Mobile'));
+    document.getElementById("AB-8").addEventListener("click", () => toggleLayer('MainStation'));
     
     const populationData = await d3.csv("./../csv-data/Bevölkerungsdichte.csv");
 
@@ -302,7 +310,7 @@ async function drawMap() {
                     })
                     .on("mouseover", onPolygonHover)  // Using mouseover event
                     .on("mouseout", onPolygonMouseout); // Using mouseout event
-            }else if (["WC", "Market","Stop"].includes(layerName)) {
+            }else if (["WC", "Market", "Mobile", "MainStation"].includes(layerName)) {
                 g.selectAll("image." + layerName)
                     .data(data.features || [])
                     .join("image")
@@ -311,6 +319,20 @@ async function drawMap() {
                     .attr("y", d => projection(d.geometry.coordinates)[1] - iconSize / 2) // Centering the icon
                     .attr("width", iconSize) // Set icon size
                     .attr("height", iconSize) // Set icon size
+                    .attr("xlink:href", getIconUrl(layerName)) // Function to get the icon URL
+                    .on("mouseover", onPolygonClick) // Assuming you want to keep this event
+                    .on("mouseout", function() {
+                        document.getElementById('tooltip').style.visibility = 'hidden';
+                    });
+            }else if (["Stop"].includes(layerName)) {
+                g.selectAll("image." + layerName)
+                    .data(data.features || [])
+                    .join("image")
+                    .attr("class", layerName)
+                    .attr("x", d => projection(d.geometry.coordinates)[0] - SiconSize / 2) // Centering the icon
+                    .attr("y", d => projection(d.geometry.coordinates)[1] - SiconSize / 2) // Centering the icon
+                    .attr("width", SiconSize) // Set icon size
+                    .attr("height", SiconSize) // Set icon size
                     .attr("xlink:href", getIconUrl(layerName)) // Function to get the icon URL
                     .on("mouseover", onPolygonClick) // Assuming you want to keep this event
                     .on("mouseout", function() {
@@ -332,6 +354,10 @@ function getIconUrl(layerName) {
             return "./../icon/shopping-cart.png";
         case "Stop":
             return "./../icon/location.png";
+        case "Mobile":
+            return "./../icon/Hstation.png";
+        case "MainStation":
+            return "./../icon/zug.png";
         default:
             return "";
     }
@@ -417,7 +443,7 @@ function onPolygonClick(event) {
     let tooltipContent = '';
 
     if (name) { // Check if 'name' is defined and not null
-        tooltipContent += `Stop Name: ${name}<br>`; // Add 'Name' to the content
+        tooltipContent += `Name: ${name}<br>`; // Add 'Name' to the content
     }
 
     if (area) { // Similarly, you can check for 'area' if needed

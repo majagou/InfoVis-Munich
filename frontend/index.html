@@ -12,42 +12,16 @@
 </head>
 <body>
     <main>
-        <section>
-            <div class="description-page">
-                <h1>Welcome to Our Website</h1>
-                <p>Some text information here...</p>
-        
-                <button id="moreInfoButton"><i class="fa fa-info-circle"></i> More Info</button>
-                 <!-- The Modal -->
-                    <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>More Information</h2>
-                        <p1>
-                            Our project examines how these networks correlate public facilities. </br>
-                            Utilizing a Bavarian Choropleth map,</br>
-                            we offer unique insights into urban dynamics, including a detailed analysis of </br>
-                            population changes from 2012 to 2022 through an interactive timeline.
-                        </p1>
-                    </div>
-  
-                    </div>
-            </div>
-            
-            
-            
-        </section>
-
-        <div id="title">
-            <h1>
-                <i class="fa-solid fa-home"></i>
-                DataVis.web
-            </h1>
-        </div>
 
         <div id="container">
+            <div id="title">
+                <a href="./../frontend/main.html">
+                    <h1>
+                        <i class="fa-solid fa-home"></i>
+                        DataVis.web
+                    </h1>
+                </a>
+            </div>
             <div class="flex-column flex-center" id="sidebar">
                 <h2>Mode</h2>
                 <a href="./../frontend/index.html">
@@ -76,11 +50,13 @@
                 <div class="panel">
                     <p id="AB-5">WC</p>
                     <p id="AB-6">Market</p>
+                    <p id="AB-7">Mobile Point</p>
                 </div>
     
                 <button class="accordion-btn">Transportations</button>
                 <div class="panel">
-                    <p id="AB-4">Stops</p>
+                    <p id="AB-4">Stations</p>
+                    <p id="AB-8">Main Stations</p>
                 </div>
 
                 <div id="info-checkbox" for="infoToggle">
@@ -95,7 +71,7 @@
 
                 <div id="info-checkbox" for="StopinfoToggle">
                     <label class="flex-row" id="info-checkbox-label" for="StopinfoToggle">
-                        <label class="switch-label">Stop Information Display</label>
+                        <label class="switch-label">Station Information Display</label>
                         <div class="switch">
                             <input type="checkbox" id="StopinfoToggle">
                             <span class="slider round"></span>

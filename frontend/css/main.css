@@ -1,0 +1,213 @@
+:root {
+    /* #0B0C10 almost balck, #1F2833 dark blue, #C5C6C7 grey, #66FCF1 bright blue, #45A29E midddle blue
+       #EAE7DC shell yellow, #D8C3A5 warm yellow, #8E8D8A grey, #E98074, #E85A4F
+       #F2F1EF isabelline #B1A6A4 quick silver, #697184 aurometalsaurus, #D8CFD0 light grey, #413F3D black olive*/
+    background-color: #fefefe;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth;
+  }
+  
+  
+section {
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h3 {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+
+    /* Styling */
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Top/bottom and left/right padding */
+    font-size: 16px; /* Larger font size */
+    font-weight: bold; /* Bold font */
+    cursor: pointer; /* Cursor changes to a hand when hovering over the button */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Adds a slight shadow for depth */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+h1 {
+    position: relative;
+    color: #535F80;
+    font-size: 20px;
+}
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.description-page p {
+    overflow: hidden; /* Ensures the content is clipped */
+    border-right: .15em solid black; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as typing */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation: 
+      typewriter 4s steps(40) 1s 1 normal both,
+      blinkTextCursor 500ms steps(40) infinite normal;
+}
+
+@keyframes blinkTextCursor {
+    from { border-right-color: black; }
+    to { border-right-color: transparent; }
+}
+
+.description-page h1 {
+    animation: fadeIn 2s ease 2s 1 normal both;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+
+#moreInfoButton {
+    background-color: #9972af; 
+    color: white; /* White text */
+    padding: 15px 32px; /* Top and bottom, left and right padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+#moreInfoButton:hover {
+    background-color: #cbb8d7; 
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+#moreInfoButton {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#moreInfoButton:hover {
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.3);
+}
+#moreInfoButton {
+    background: linear-gradient(to right, #9972af, #cbb8d7);
+}
+#moreInfoButton {
+    animation: fadeIn 2s;
+}
+
+#MapButton {
+    background-color: #9972af; 
+    color: white; /* White text */
+    padding: 15px 32px; /* Top and bottom, left and right padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+#mapButton:hover {
+    background-color: #cbb8d7; 
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+#MapButton {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#MapButton:hover {
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.3);
+}
+#MapButton {
+    background: linear-gradient(to right, #9972af, #cbb8d7);
+}
+#MapButton {
+    animation: fadeIn 2s;
+}
+
+/* The Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+html {
+    scroll-behavior: smooth;
+  }
+
+h2 {
+    color: #051747;
+    font-size: 40px;
+    padding: 20px;
+    margin: 0;
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+}
