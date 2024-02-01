@@ -12,7 +12,7 @@ let layers = {
 };
 
 const iconSize = 35;
-const SiconSize = 15;
+const SiconSize = 20;
 
 schemes = [
     {
@@ -186,6 +186,39 @@ function toggleLayer(layerName) {
     drawMap();
 }
 
+function zoomed(event) {
+    // Current zoom level
+    const zoomLevel = event.transform.k;
+
+    // Calculate new icon sizes inversely with the zoom level
+    const newIconSize = iconSize / zoomLevel;
+    const newSIconSize = SiconSize / zoomLevel;
+
+    // Update the width and height attributes of the icons
+    svg.selectAll("image.WC")
+    .attr("width", newIconSize)
+    .attr("height", newIconSize);
+
+    svg.selectAll("image.Market")
+    .attr("width", newIconSize)
+    .attr("height", newIconSize);
+
+    svg.selectAll("image.Mobile")
+    .attr("width", newIconSize)
+    .attr("height", newIconSize);
+
+    svg.selectAll("image.MainStation")
+       .attr("width", newIconSize)
+       .attr("height", newIconSize);
+
+    svg.selectAll("image.Stop")
+       .attr("width", newSIconSize)
+       .attr("height", newSIconSize);
+
+    // Apply the zoom transformation to the zoomable group
+    svg.select('.path-wrap').attr("transform", event.transform);
+}
+
 function initializeSVG() {
 
     svg = d3.select(".VisSVG")
@@ -199,10 +232,10 @@ function initializeSVG() {
 
     svg.append('g').attr("class", 'path-wrap');
 
-    // Define and apply zoom behavior
     const zoom = d3.zoom()
         .scaleExtent([1, 8])
-        .on("zoom", event => svg.select('.path-wrap').attr("transform", event.transform));
+        .on("zoom", zoomed);
+
     svg.call(zoom);
 }
 
