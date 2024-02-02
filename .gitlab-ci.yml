@@ -7,7 +7,7 @@ before_script:
 pages:
   script:
     - npm run build
+    - mv frontend public
   artifacts:
     paths:
-      - frontend
-  publish: frontend
+      - public
