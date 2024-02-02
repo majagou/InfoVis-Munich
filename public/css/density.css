@@ -1,0 +1,115 @@
+#wrapper {
+    background-color: transparent;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    width: 100vw;
+    height: 95vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+}
+
+.VisSVG {
+    width: 100vw;
+    height: 95vh;
+}
+
+#tooltip {
+    position: absolute; 
+    visibility: hidden; 
+    background-color: white; 
+    border: 1px solid black; 
+    padding: 5px; 
+    z-index: 10;
+}
+
+#info-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px 30px;
+    background-color: rgba(61, 60, 108, 0.2);
+    color: #697184;
+}
+
+#info-checkbox-label {
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This is important for internal alignment */
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 24px;
+    margin-left: auto; /* This pushes the switch to the right end of its container */
+    flex-wrap: nowrap;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute; /* This can ensure the input is clickable */
+    opacity: 0; /* Invisible but functional */
+    cursor: pointer; /* Indicate it's clickable */
+}
+  
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #697184;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: #051747;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #051747;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+  
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
