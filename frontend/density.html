@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobility Nav</title>
+    <link rel="stylesheet" href="./../frontend/css/style.css">
+    <link rel="stylesheet" href="./../frontend/css/density.css">
+    <script src="./../d3.v7.js"></script>
+    <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+</head>
+<body>
+    <main>
+
+        <div id="container">
+            <div id="title">
+                <a href="./../frontend/index.html">
+                    <h1>
+                        <i class="fa-solid fa-home"></i>
+                        DataVis.web
+                    </h1>
+                </a>
+            </div>
+            <div class="flex-column flex-center" id="sidebar">
+                <h2>Mode</h2>
+                <a href="./../frontend/density.html">
+                    <i class="fa fa-fw fa-user-circle"></i>
+                    <button class="sidebar-btn">Mobility</button>
+                </a>
+                <a href="./../frontend/cluster.html">
+                    <i class="fa fa-fw fa-magnet"></i>
+                    <button class="sidebar-btn">Timeline</button>
+                </a>
+            </div>
+            <div id="wrapper" class="flex-center">
+                <svg class="VisSVG flex-center"></svg>
+            </div>
+            <div class="flex-column flex-center" id="accordion">
+
+                <!--<h2>Filters</h2>-->   
+                <button class="accordion-btn">Administrative Border</button>
+                <div class="panel">
+                    <p id="AB-1">City Districts</p>
+                    <p id="AB-2">Subdistricts</p>
+                    <p id="AB-3">Quarters</p>
+                </div>
+    
+                <button class="accordion-btn">Public Facility</button>
+                <div class="panel">
+                    <p id="AB-5">WC</p>
+                    <p id="AB-6">Market</p>
+                    <p id="AB-7">Mobile Point</p>
+                </div>
+    
+                <button class="accordion-btn">Transportations</button>
+                <div class="panel">
+                    <p id="AB-4">Stations</p>
+                    <p id="AB-8">Main Stations</p>
+                </div>
+
+                <div id="info-checkbox" for="infoToggle">
+                    <label class="flex-row" id="info-checkbox-label" for="infoToggle">
+                        <label class="switch-label">Area Information Display</label>
+                        <div class="switch">
+                            <input type="checkbox" id="infoToggle">
+                            <span class="slider round"></span>
+                        </div>
+                    </label>                    
+                </div>
+
+                <div id="info-checkbox" for="StopinfoToggle">
+                    <label class="flex-row" id="info-checkbox-label" for="StopinfoToggle">
+                        <label class="switch-label">Station Information Display</label>
+                        <div class="switch">
+                            <input type="checkbox" id="StopinfoToggle">
+                            <span class="slider round"></span>
+                        </div>
+                    </label>                    
+                </div>
+                
+            </div>
+            <div id="tooltip"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Group 28 InfoVis</p>
+    </footer>
+    <script src="./../frontend/javascript/data.js"></script>
+    <script src="./../frontend/javascript/draw-map.js"></script>
+</body>
+</html>
