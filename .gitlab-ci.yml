@@ -5,10 +5,9 @@ before_script:
   - npm ci
 
 pages:
-  stage: deploy
   script:
-    - mkdir public
-    - cp -r frontend/* public/
+    - npm run build
   artifacts:
     paths:
-      - public
+      - frontend
+  publish: frontend
