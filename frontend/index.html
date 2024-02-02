@@ -11,27 +11,26 @@
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 </head>
 <body>
-        <!--<div class="title">
-            <select id="select"></select>
-            <h3 id="name"></h3>
-        </div>-->
     <main>
-        <div id="title">
-            <h1>
-                <i class="fa-solid fa-home"></i>
-                DataVis.web
-            </h1>
-        </div>
+
         <div id="container">
+            <div id="title">
+                <a href="./../frontend/main.html">
+                    <h1>
+                        <i class="fa-solid fa-home"></i>
+                        DataVis.web
+                    </h1>
+                </a>
+            </div>
             <div class="flex-column flex-center" id="sidebar">
                 <h2>Mode</h2>
                 <a href="./../frontend/index.html">
                     <i class="fa fa-fw fa-user-circle"></i>
-                    <button class="sidebar-btn">Density</button>
+                    <button class="sidebar-btn">Mobility</button>
                 </a>
                 <a href="./../frontend/cluster.html">
                     <i class="fa fa-fw fa-magnet"></i>
-                    <button class="sidebar-btn">Cluster</button>
+                    <button class="sidebar-btn">Timeline</button>
                 </a>
             </div>
             <div id="wrapper" class="flex-center">
@@ -47,18 +46,17 @@
                     <p id="AB-3">Quarters</p>
                 </div>
     
-                <button class="accordion-btn">Travel Plan</button>
+                <button class="accordion-btn">Public Facility</button>
                 <div class="panel">
-                    <p>Day</p>
-                    <p>Night</p>
+                    <p id="AB-5">WC</p>
+                    <p id="AB-6">Market</p>
+                    <p id="AB-7">Mobile Point</p>
                 </div>
     
                 <button class="accordion-btn">Transportations</button>
                 <div class="panel">
-                    <p>S-Bahn</p>
-                    <p>U-Bahn</p>
-                    <p>Tram</p>
-                    <p>Bus</p>
+                    <p id="AB-4">Stations</p>
+                    <p id="AB-8">Main Stations</p>
                 </div>
 
                 <div id="info-checkbox" for="infoToggle">
@@ -66,6 +64,16 @@
                         <label class="switch-label">Area Information Display</label>
                         <div class="switch">
                             <input type="checkbox" id="infoToggle">
+                            <span class="slider round"></span>
+                        </div>
+                    </label>                    
+                </div>
+
+                <div id="info-checkbox" for="StopinfoToggle">
+                    <label class="flex-row" id="info-checkbox-label" for="StopinfoToggle">
+                        <label class="switch-label">Station Information Display</label>
+                        <div class="switch">
+                            <input type="checkbox" id="StopinfoToggle">
                             <span class="slider round"></span>
                         </div>
                     </label>                    

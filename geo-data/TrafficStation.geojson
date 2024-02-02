@@ -1,0 +1,75 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Hauptbahnhof" },
+      "geometry": { "type": "Point", "coordinates": [11.5586, 48.1408] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Ostbahnhof" },
+      "geometry": { "type": "Point", "coordinates": [11.6049, 48.1275] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Pasing" },
+      "geometry": { "type": "Point", "coordinates": [11.4605, 48.1478] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Marienplatz" },
+      "geometry": { "type": "Point", "coordinates": [11.5754, 48.1374] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Karlsplatz" },
+      "geometry": { "type": "Point", "coordinates": [11.5650, 48.1391] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Odeonsplatz" },
+      "geometry": { "type": "Point", "coordinates": [11.5766, 48.1422] }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.580556, 48.168333] 
+      },
+      "properties": {
+        "name": "Münchener Freiheit"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.576389, 48.179444]
+      },
+      "properties": {
+        "name": "Scheidplatz"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.553333, 48.174722] 
+      },
+      "properties": {
+        "name": "Olympiazentrum"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.531389, 48.152222] 
+      },
+      "properties": {
+        "name": "Rotkreuzplatz"
+      }
+    }
+  ]
+}

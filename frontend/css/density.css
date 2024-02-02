@@ -32,8 +32,8 @@
     align-items: center;
     justify-content: flex-end;
     padding: 20px 30px;
-    background-color: rgba(128, 128, 128, 0.1);
-    color: white;
+    background-color: rgba(61, 60, 108, 0.2);
+    color: #697184;
 }
 
 #info-checkbox-label {
@@ -74,7 +74,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #697184;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -92,11 +92,11 @@
 }
   
 input:checked + .slider {
-    background-color: #6fffee;
+    background-color: #051747;
 }
   
 input:focus + .slider {
-    box-shadow: 0 0 1px #6fffee;
+    box-shadow: 0 0 1px #051747;
 }
   
 input:checked + .slider:before {
@@ -113,4 +113,3 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-  

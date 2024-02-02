@@ -8,7 +8,7 @@ function getRandomColor() {
   return color;
 }
 
-/* // Get the modal
+// Get the modal
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
@@ -32,7 +32,7 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-} */
+}
 
 window.addEventListener('scroll', () => {
   let descriptionHeight = document.querySelector('.description-page').offsetHeight;
