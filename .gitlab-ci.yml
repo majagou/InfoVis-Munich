@@ -5,8 +5,12 @@ before_script:
   - npm install
 
 pages:
+  stage: deploy
   script:
     - npm run build
+    - mkdir .public
+    - cp -r * .public
+    - mv .public public
   artifacts:
     paths:
       - public
