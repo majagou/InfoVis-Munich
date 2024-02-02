@@ -128,12 +128,12 @@ sliderEl.addEventListener("input", (event) => {
 });
 
 async function initializeMap() {
-    StadtbezirkData = await d3.json("./../geo-data/formatted-Stadtbezirk.geojson");
+    StadtbezirkData = await d3.json("./../frontend/geo-data/formatted-Stadtbezirk.geojson");
     StadtbezirkData.features = StadtbezirkData.features.map(function (feature) {
         return turf.rewind(feature, { reverse: true });
     });
     
-    populationData = await d3.csv("./../csv-data/Bevölkerungsdichte.csv");
+    populationData = await d3.csv("./../frontend/csv-data/Bevölkerungsdichte.csv");
     console.log(populationData)
 
     // Initialize SVG, projection, etc.
