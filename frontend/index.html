@@ -3,49 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="./../frontend/css/main.css">
+    <title>Mobility Nav</title>
+    <link rel="stylesheet" href="./../frontend/css/style.css">
+<<<<<<< HEAD
+    <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="content">
+        <img id="displayedImage" src="./../figures/sampleImage.jpg" alt="Displayed Image">
+=======
+    <link rel="stylesheet" href="./../frontend/css/density.css">
     <script src="./../d3.v7.js"></script>
     <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 </head>
 <body>
+    <div id="content">
+        <!--<div class="title">
+            <select id="select"></select>
+            <h3 id="name"></h3>
+        </div>-->
+        <div id="wrapper" class="flex-center">
+            <svg class="VisSVG flex-center"></svg>
+        </div>
+>>>>>>> f8aa3e6f1904e02ff259c441d7cb096b1a21fb43
+    </div>
     <main>
-        <section>
-            <div id="title">
-        
-            </div>
-            <div class="description-page">
-                <h1>Welcome to Our Website</h1>
-                <p>Insights of Munich... Scroll down to view more</p>
-        
-                <button id="moreInfoButton"><i class="fa fa-info-circle"></i> More Info</button>
-                <a href="./../frontend/density.html" id="MapButton" class="button-style">
-                    <i class="fa fa-map"></i> See the Map
+        <div id="title">
+            <h1>
+                <i class="fa-solid fa-home"></i>
+                DataVis.web
+            </h1>
+        </div>
+        <div id="container">
+            <div class="flex-column flex-center" id="sidebar">
+                <h2>Mode</h2>
+                <a href="./../frontend/index.html">
+                    <i class="fa fa-fw fa-user-circle"></i>
+                    <button class="sidebar-btn">Density</button>
                 </a>
-                
-
-                 <!-- The Modal -->
-                    <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>More Information</h2>
-                        <p1>
-                            Our project examines how these networks correlate public facilities. </br>
-                            Utilizing a Bavarian Choropleth map,</br>
-                            we offer unique insights into urban dynamics, including a detailed analysis of </br>
-                            population changes from 2012 to 2022 through an interactive timeline.
-                        </p1>
-                    </div>
-                    </div>
+                <a href="./../frontend/cluster.html">
+                    <i class="fa fa-fw fa-magnet"></i>
+                    <button class="sidebar-btn">Cluster</button>
+                </a>
             </div>
-        </section>
-        <footer>
-            <p>&copy; Group 28 InfoVis</p>
-        </footer>
-        <script src="./../frontend/javascript/data-copy.js"></script>
-        <script src="./../frontend/javascript/draw-map.js"></script>
+            <div class="flex-column flex-center" id="accordion">
+    
+                <button class="accordion-btn">Cities</button>
+                <div class="panel">
+                    <p>Munich</p>
+                    <p>Hamburg</p>
+                </div>
+    
+                <button class="accordion-btn">Travel Plan</button>
+                <div class="panel">
+                    <p>Day</p>
+                    <p>Night</p>
+                </div>
+    
+                <button class="accordion-btn">Transportations</button>
+                <div class="panel">
+                    <p>S-Bahn</p>
+                    <p>U-Bahn</p>
+                    <p>Tram</p>
+                    <p>Bus</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Group 28 InfoVis</p>
+    </footer>
+<<<<<<< HEAD
+
+    <script src="./../frontend/javascript/data.js"></script>
+    <script src="./../frontend/javascript/draw-map.js"></script>
+    <script src="./../node-modules/d3.js"></script>
+=======
+    <script src="./../frontend/javascript/data.js"></script>
+    <script src="./../frontend/javascript/draw-map.js"></script>
+>>>>>>> f8aa3e6f1904e02ff259c441d7cb096b1a21fb43
 </body>
 </html>
