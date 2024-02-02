@@ -1,6 +1,6 @@
 # Visualisation of Public Traffic Networks
 Welcome to the Information Visualisation project by Team 28! Delve into our work on mapping public transport networks and their influence on urban landscapes.
-[Visit Our Website.](http://www.cip.ifi.lmu.de/~rohlfs/).
+[Visit Our Website.](https://iv2324-projects.gitlab.lrz.de/Team-28/).
 
 ## Content
 - [About Us](#about-us)
