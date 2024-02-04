@@ -1,6 +1,5 @@
 # Visualisation of Public Traffic Networks
 Welcome to the Information Visualisation project by Team 28! Delve into our work on mapping public transport networks and their influence on urban landscapes.
-[Visit Our Website.](https://iv2324-projects.gitlab.io/Team-28/).
 
 ## Content
 - [About Us](#about-us)
@@ -23,13 +22,15 @@ We are Shiyi Gou and Yunuo Zhang, passionate about data visualization and urban 
 In the winter semester of 2023/24 at LMU, we developed an innovative information visualization website focusing on the intricate public transport networks of Munich. Our project examines how these networks correlate with the city's population distribution and public facilities. Utilizing a Bavarian Choropleth map, we offer unique insights into urban dynamics, including a detailed analysis of population changes from 2012 to 2022 through an interactive timeline.
 
 ## Features
-- Population Density Map:
+- **User onboarding instruction:**
+Guide user step by step to get familiar with our website functions
+- **Population Density Map:**
 Visualize Munich's population density and its relation to transport networks.
-- Timeline change:
+- **Timeline change:**
 Track the evolution of population and density from 2012 to 2022.
-- Filters:
+- **Filters with checkboxes:**
 Display options for WCs, Markets, and Stations.
-- Information Display Checkbox:
+- **Information Display Checkbox:**
 Toggle to view detailed area and stop information.
 
 ## Vision

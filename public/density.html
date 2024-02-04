@@ -14,8 +14,8 @@
 </head>
 <body>
     <main>
-        <div id="container" data-step="1" data-title="Welcome!" data-intro="Here is our visualization of Munich Mobility and Population.">
-            <div id="sidebar" class="sidebar" data-step="3" data-intro="You can klick here to see the full menu.">
+        <div id="container" data-step="1" data-title="Welcome!" data-intro="Here is Information Visualisation project by Team 28! Delve into our work on mapping public transport networks and their influence on urban landscapes. This map is our main visual, all the information will be placed here.">
+            <div id="sidebar" class="sidebar" data-step="2" data-intro="Here is our navigation list. You can click here to open or close the full menu.">
 <!--                 <h2>Mode</h2> -->
                 <div class="logo-details">
                     <i class='bx bxl-c-plus-plus icon'></i>
@@ -23,7 +23,7 @@
                     <i class='bx bx-menu' id="btn"></i>
                 </div>
                 <ul class="nav-list">
-                    <li>
+                    <li data-step="3" data-intro="Click here to return homepage.">
                         <a href="./../index.html">
                             <i class="fa-solid fa-home"></i>
                             <span class="links_name">Home</span>
@@ -37,21 +37,21 @@
                         </a>
                         <span class="tooltip">Tutorial</span>
                     </li>
-                    <li>
+                    <li data-step="4" data-intro="Here is where you're right now!">
                         <a href="./../public/density.html">
-                            <i class="fa fa-fw fa-user-circle"></i>
+                            <i class="fa fa-fw fa-magnet"></i>
                             <span class="links_name">Mobility</span>
                         </a>
                         <span class="tooltip">Mobility</span>
                     </li>
-                    <li>
+                    <li data-step="5" data-intro="Click here to see how population distribution in Muncih changed from 2012 to 2022">
                         <a href="./../public/cluster.html">
-                            <i class="fa fa-fw fa-magnet"></i>
+                            <i class="fa fa-fw fa-user-circle"></i>
                             <span class="links_name">Timeline</span>
                         </a>
                         <span class="tooltip">Timeline</span>
                     </li>
-                    <li>
+                    <li data-step="6" data-intro="You can see more information about our team on this page.">
                         <a href="./../public/about.html">
                             <i class='bx bx-heart'></i>
                             <span class="links_name">About Us</span>
@@ -61,12 +61,12 @@
                 </ul>
             </div>
             <div id="wrapper" class="flex-center">
-                <svg class="VisSVG flex-center" data-step="2" data-intro="This map is our main visual, all the information will be placed here."></svg>
+                <svg class="VisSVG flex-center"></svg>
             </div>
-            <div class="flex-column flex-center" id="accordion" data-step="4" data-intro="Here is our information filters.">
+            <div class="flex-column flex-center" id="accordion" data-step="7" data-intro="Here are our filters list where you can control all the information display">
 
                 <!--<h2>Filters</h2>-->   
-                <button class="accordion-btn" data-step="5" data-intro="Klick here to see the administrative border of Munich.">Administrative Border</button>
+                <button class="accordion-btn">Administrative Border</button>
                 <div class="panel">
                     <input type="checkbox" id="AB-1">
                     <label for="AB-1">City Districts</label>
@@ -76,8 +76,8 @@
                     <label for="AB-3">Quarters</label>
                 </div>
     
-                <button class="accordion-btn">Public Facility</button>
-                <div class="panel">
+                <button class="accordion-btn" data-step="8" data-intro="Klick the accordion button to see all the filters.">Public Facility</button>
+                <div class="panel" data-step="9" data-intro="Here you can click the checkbox to see the information you want to see.">
                     <input type="checkbox" id="AB-5">
                     <label for="AB-5">WC</label>
                     <input type="checkbox" id="AB-6">
@@ -94,9 +94,9 @@
                     <label for="AB-8">Main Stations</label>
                 </div>
 
-                <div id="info-checkbox" for="infoToggle" data-step="6" data-intro="Slider this button to display map area information.">
+                <div id="info-checkbox" for="infoToggle" data-step="10" data-intro="Turning on this slider button, you can now see the area information by hovering you mouse on the map.">
                     <label class="flex-row" id="info-checkbox-label" for="infoToggle">
-                        <label class="switch-label">Area Information</label>
+                        <label class="switch-label">Area Info</label>
                         <div class="switch">
                             <input type="checkbox" id="infoToggle">
                             <span class="slider round"></span>
@@ -104,9 +104,9 @@
                     </label>                    
                 </div>
 
-                <div id="info-checkbox" for="StopinfoToggle" data-step="7" data-intro="Slider this button to display all point information on the map.">
+                <div id="info-checkbox" for="StopinfoToggle" data-step="11" data-intro="Turning on this slider button, you can now see all the mobility information by hovering you mouse on the point icons.">
                     <label class="flex-row" id="info-checkbox-label" for="StopinfoToggle">
-                        <label class="switch-label">Points Information</label>
+                        <label class="switch-label">Mobility Info</label>
                         <div class="switch">
                             <input type="checkbox" id="StopinfoToggle">
                             <span class="slider round"></span>
