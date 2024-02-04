@@ -42,7 +42,7 @@ schemes = [
     {
       name: "PuOr", 
       colors: [
-        "#e8e8e8", "#e4d9ac", "#c8b35a",
+        "#f2e7e1", "#e4d9ac", "#c8b35a",
         "#cbb8d7", "#c8ada0", "#af8e53",
         "#9972af", "#976b82", "#804d36"
       ]
@@ -66,7 +66,7 @@ const labels = ["Low", "Medium", "High"]; // Labels for categories
 const colors = [
     "#9972af", "#976b82", "#804d36",
     "#cbb8d7", "#c8ada0", "#af8e53",
-    "#e8e8e8", "#e4d9ac", "#c8b35a"
+    "#f2e7e1", "#e4d9ac", "#c8b35a"
   ];
 
 function convertStopsToGeoJSON(Data) {
@@ -341,8 +341,26 @@ async function drawMap() {
                         let densityCat = getDensityCategory(d.properties.populationDensity);
                         return selectedScheme[popCat * 3 + densityCat];
                     })
-                    .on("mouseover", onPolygonHover)  // Using mouseover event
-                    .on("mouseout", onPolygonMouseout); // Using mouseout event
+                    .on("mouseover", function(event, d) {
+                        onPolygonHover(event, d); // Correctly call the function with parentheses
+                        d3.select(this)
+                            .classed("path-hover-effect", true)
+                            .transition()
+                            .duration(200) // Duration in milliseconds
+                            .attr("stroke-width", layerStyles[layerName].strokeWidth*2.5) // Double the stroke width
+                            .attr("stroke", "#fefefe") // Change the stroke color to red for visibility
+                            .attr("fill-opacity", 0.5); // Optional: change fill opacity for a slight pop effect
+                    })
+                    .on("mouseout", function(event) {
+                        onPolygonMouseout(event); // Correctly call the function with parentheses
+                            d3.select(this)
+                            .classed("path-hover-effect", false)
+                            .transition()
+                            .duration(200)
+                            .attr("stroke-width", layerStyles[layerName].strokeWidth)
+                            .attr("stroke", layerStyles[layerName].strokeColor)
+                            .attr("fill-opacity", 1); // Revert fill opacity
+                    });                                
             }else if (["WC", "Market", "Mobile", "MainStation"].includes(layerName)) {
                 g.selectAll("image." + layerName)
                     .data(data.features || [])
@@ -436,9 +454,8 @@ document.getElementById('StopinfoToggle').addEventListener('change', function() 
     toggleStopInfo();
 });
 
-function onPolygonHover(event) {
+function onPolygonHover(event, d) {
     if (!isInfoEnabled) return;
-    const d = d3.select(this).datum();
 
     // Get category labels
     const populationCategory = getPopulationCategoryLabel(d.properties.population);
