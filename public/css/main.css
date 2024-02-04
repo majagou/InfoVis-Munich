@@ -6,6 +6,11 @@ body, html {
   position: relative;
   background-color: transparent;
 }
+section{
+  background-color: #9972af; opacity: 0.8;
+  
+}
+
 
 .animation-wrapper {
   display: flex;
