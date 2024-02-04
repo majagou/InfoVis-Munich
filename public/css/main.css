@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  /*     font-family: Arial, Helvetica, sans-serif; */
+      font-family: "Poppins" , sans-serif;
+      margin: 0;
+      padding: 0;
+  }
+  
 body, html {
   height: 100%;
   display: flex;
@@ -6,10 +15,7 @@ body, html {
   position: relative;
   background-color: transparent;
 }
-section{
-  background-color: #9972af; opacity: 0.7;
-  
-}
+
 
 
 .animation-wrapper {
@@ -81,22 +87,10 @@ section{
   border-radius: 50%;
 }
 
-:root {
-  /* #0B0C10 almost balck, #1F2833 dark blue, #C5C6C7 grey, #66FCF1 bright blue, #45A29E midddle blue
-     #EAE7DC shell yellow, #D8C3A5 warm yellow, #8E8D8A grey, #E98074, #E85A4F
-     #F2F1EF isabelline #B1A6A4 quick silver, #697184 aurometalsaurus, #D8CFD0 light grey, #413F3D black olive*/
-  background-color: #fefefe;
-}
-
-* {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-
 section {
-  height: 100vh; /* Full viewport height */
+  background-color: #9972af; opacity: 0.7;
+  height: 30vh;
+  width: 100vw;
   text-align: center;
   background-color: white;
   display: flex;
@@ -110,6 +104,8 @@ h1 {
   position: relative;
   color: #535F80;
   font-size: 25px;
+  font-family: "Poppins" , sans-serif;
+
   
 }
 @keyframes typewriter {
@@ -118,6 +114,7 @@ h1 {
 }
 
 .description-page p {
+  font-family: "Poppins" , sans-serif;
   color:#3b3b3b;
   overflow: hidden; 
   border-right: .15em solid black; /* The typwriter cursor */
@@ -248,14 +245,29 @@ h1 {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  animation: fadeIn 2s;
+
 }
 
-.close-button:hover,
+.close-button:hover {
+  background-color: #cbb8d7; 
+  transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.close-button {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.close-button:hover {
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.3);
+}
+
 .close-button:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -265,6 +277,17 @@ h2 {
   font-size: 40px;
   padding: 20px;
   margin: 0;
+  font-family: "Poppins" , sans-serif;
+
+}
+
+p1 {
+  color: #051747;
+  font-size: 12px;
+  padding: 20px;
+  margin: 0;
+  font-family: "Poppins" , sans-serif;
+
 }
 
 main {

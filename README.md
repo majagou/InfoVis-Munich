@@ -49,8 +49,8 @@ Toggle to view detailed area and stop information.
 - [Population density of Munich from 2000 to 2022](https://opendata.muenchen.de/dataset/0be6dc92-9ca5-4ae9-8a08-ba4039f2a225/resource/3f4aea4c-a79a-4f5b-ab01-a6ad540449f0/download/indikat_bevoelkerung_bevoelkerungsdichte_240723.csv) by [Statistisches Amt München](https://www.mstatistik-muenchen.de/indikatorenatlas/export/export.php)
 - [Stationslist MVV](https://www.mvv-muenchen.de/fileadmin/mediapool/02-Fahrplanauskunft/03-Downloads/openData/20-01-MVV_HST-_s20-o-T.csv) by [Münchner Verkehrs- und Tarifverbund GmbH (MVV](https://www.mvv-muenchen.de/fahrplanauskunft/fuer-entwickler/opendata/index.html)
 
-*Icons for presentation*
-- [Icon name here](icon sourse link here) by [Icon owner](Icon owner link heare)
+*Animation Resource*
+- [Staggering](https://animejs.com/documentation/#gridStaggering) 
 
 ## Technologies Used
 Our project heavily relies on D3.js, a powerful JavaScript library for producing dynamic, interactive data visualizations in web browsers. We chose D3.js for its flexibility and capabilities in rendering complex data-driven visualizations, which was crucial for effectively presenting the public transport networks and population distribution of Munich. Other technologies used in this project include HTML, CSS, and JavaScript for the frontend development.
