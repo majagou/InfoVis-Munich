@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobility Nav</title>
     <link rel="stylesheet" href="./../public/css/style.css">
-    <link rel="stylesheet" href="./../public/css/density.css">
-    <link rel="stylesheet" href="./../public/css/cluster.css">
     <link rel="stylesheet" href="./../node_modules/intro.js/introjs.css">
+    <link rel="stylesheet" href="./../public/css/about.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="./../d3.v7.js"></script>
     <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
@@ -52,7 +51,7 @@
                         <span class="tooltip">Timeline</span>
                     </li>
                     <li>
-                        <a href="./../public/about.html">
+                        <a href="./../public/cluster.html">
                             <i class='bx bx-heart'></i>
                             <span class="links_name">About Us</span>
                         </a>
@@ -60,50 +59,43 @@
                     </li>
                 </ul>
             </div>
-            <div id="wrapper" class="flex-center">
-                <svg class="VisSVG flex-center"></svg>
-            </div>
-            <div id="slider-container" data-step="2" data-intro="You can change the timeline to see how the population changed from 2012 to 2022">
-                <div class="range">
-                    <div class="range-slider">
-                        <label for="range">Select a year:</label><br />
-                        <input
-                        type="range"
-                        min="2012"
-                        max="2022"
-                        value="2012"
-                        id="range"
-                        list="Jahr"
-                        step="1"
-                        />
-                        <div class="sliderticks">
-                            <span>2012</span>
-                            <span>2013</span>
-                            <span>2014</span>
-                            <span>2015</span>
-                            <span>2016</span>
-                            <span>2017</span>
-                            <span>2018</span>
-                            <span>2019</span>
-                            <span>2020</span>
-                            <span>2021</span>
-                            <span>2022</span>
-                        </div>
+            <div class="about-section">
+                <h1>About Us Page</h1>
+                <p>Some text about who we are and what we do.</p>
+                <p>Resize the browser window to see that this page is responsive by the way.</p>
+              </div>
+            <h2 style="text-align:center">Our Team</h2>
+            <div class="row">
+                <div class="column">
+                    <div class="card">
+                    <img src="./../figures/S.jpg" alt="Shiyi" style="width:23vw; height: 25vh; object-fit: cover;">
+                    <div class="container">
+                        <h2>Shiyi Gou</h2>
+                        <p class="title">Developer & Designer</p><br>
+                        <p style="text-align:center">Shiyi.Gou@campus.lmu.de</p><br>
+                        <p><button class="button">Contact</button></p>
                     </div>
+                    </div>
+                </div>
 
-                    <div class="value">2012</div>
-
+                <div class="column">
+                    <div class="card">
+                    <img src="./../figures/Y.jpg" alt="Yunuo" style="width:23vw; height: 25vh; object-fit: cover;">
+                    <div class="container">
+                        <h2>Yunuo Zhang</h2>
+                        <p class="title">Developer & Designer</p><br>
+                        <p style="text-align:center">yunuo.zhang@campus.lmu.de.com</p><br>
+                        <p><button class="button">Contact</button></p>
+                    </div>
+                    </div>
                 </div>
             </div>
-            <div id="tooltip"></div>
-        </div>
     </main>
 
     <footer>
         <p>&copy; Group 28 InfoVis</p>
     </footer>
     <script src="./../public/javascript/data.js"></script>
-    <script src="./../public/javascript/cluster.js"></script>
     <script type="text/javascript" src="./../node_modules/intro.js/intro.js"></script>
 </body>
 </html>
