@@ -342,6 +342,7 @@ async function drawMap() {
                         return selectedScheme[popCat * 3 + densityCat];
                     })
                     .on("mouseover", function(event, d) {
+                        if (!isInfoEnabled) return;
                         onPolygonHover(event, d); // Correctly call the function with parentheses
                         d3.select(this)
                             .classed("path-hover-effect", true)
@@ -352,6 +353,7 @@ async function drawMap() {
                             .attr("fill-opacity", 0.5); // Optional: change fill opacity for a slight pop effect
                     })
                     .on("mouseout", function(event) {
+                        if (!isInfoEnabled) return;
                         onPolygonMouseout(event); // Correctly call the function with parentheses
                             d3.select(this)
                             .classed("path-hover-effect", false)
@@ -365,7 +367,7 @@ async function drawMap() {
                 g.selectAll("image." + layerName)
                     .data(data.features || [])
                     .join("image")
-                    .attr("class", layerName)
+                    .attr("class", layerName + " image-icon")
                     .attr("x", d => projection(d.geometry.coordinates)[0] - iconSize / 2) // Centering the icon
                     .attr("y", d => projection(d.geometry.coordinates)[1] - iconSize / 2) // Centering the icon
                     .attr("width", iconSize) // Set icon size
@@ -379,7 +381,7 @@ async function drawMap() {
                 g.selectAll("image." + layerName)
                     .data(data.features || [])
                     .join("image")
-                    .attr("class", layerName)
+                    .attr("class", layerName + " image-icon")
                     .attr("x", d => projection(d.geometry.coordinates)[0] - SiconSize / 2) // Centering the icon
                     .attr("y", d => projection(d.geometry.coordinates)[1] - SiconSize / 2) // Centering the icon
                     .attr("width", SiconSize) // Set icon size

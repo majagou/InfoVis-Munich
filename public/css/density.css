@@ -134,3 +134,13 @@ polygon {
     stroke-linejoin: round; /* or bevel, miter */
     stroke-linecap: round; /* or butt, square */
 }
+
+/* Add this CSS for the floating effect */
+.image-icon {
+    transition: transform 0.3s ease-in-out; /* Adjust the duration and easing as needed */
+}
+  
+.image-icon:hover {
+    transform: translateY(-9px); /* Adjust the scale and vertical translation values for the desired effect */
+}
+  
