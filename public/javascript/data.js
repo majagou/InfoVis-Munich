@@ -34,7 +34,7 @@ window.onclick = function(event) {
   }
 } */
 
-window.addEventListener('scroll', () => {
+/* window.addEventListener('scroll', () => {
   let descriptionHeight = document.querySelector('.description-page').offsetHeight;
   if (window.scrollY > descriptionHeight) {
       // Actions to perform after scrolling past the description page
@@ -47,7 +47,7 @@ window.addEventListener('scroll', () => {
       descriptionText.style.opacity = 1;
       descriptionText.style.transform = 'translateX(0)';
   }
-});
+}); */
 
 
 function changeImage(imageSrc) {
