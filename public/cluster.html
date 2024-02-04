@@ -7,36 +7,63 @@
     <link rel="stylesheet" href="./../public/css/style.css">
     <link rel="stylesheet" href="./../public/css/density.css">
     <link rel="stylesheet" href="./../public/css/cluster.css">
+    <link rel="stylesheet" href="./../node_modules/intro.js/introjs.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="./../d3.v7.js"></script>
     <script src="https://kit.fontawesome.com/10539d7a54.js" crossorigin="anonymous"></script>
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 </head>
 <body>
     <main>
-        <div id="title">
-            <a href="./../index.html">
-                <h1>
-                    <i class="fa-solid fa-home"></i>
-                    DataVis.web
-                </h1>
-            </a>
-        </div>
-        <div id="container">
-            <div class="flex-column flex-center" id="sidebar">
-                <h2>Mode</h2>
-                <a href="./../public/density.html">
-                    <i class="fa fa-fw fa-user-circle"></i>
-                    <button class="sidebar-btn">Mobility</button>
-                </a>
-                <a href="./../public/cluster.html">
-                    <i class="fa fa-fw fa-magnet"></i>
-                    <button class="sidebar-btn">Timeline</button>
-                </a>
+        <div id="container" data-step="1" data-title="Welcome!" data-intro="Here is our visualization of Munich Mobility and Population.">
+            <div id="sidebar" class="sidebar">
+                <div class="logo-details">
+                    <i class='bx bxl-c-plus-plus icon'></i>
+                        <div class="logo_name">Menu</div>
+                        <i class='bx bx-menu' id="btn" ></i>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="./../index.html">
+                            <i class="fa-solid fa-home"></i>
+                            <span class="links_name">Home</span>
+                        </a>
+                        <span class="tooltip">Home</span>
+                    </li>
+                    <li>
+                        <a href="javascript:introJs().setOption('showProgress', true).start();">
+                            <i class='bx bx-grid-alt'></i>
+                            <span class="links_name">Tutorial</span>
+                        </a>
+                        <span class="tooltip">Tutorial</span>
+                    </li>
+                    <li>
+                        <a href="./../public/density.html">
+                            <i class="fa fa-fw fa-user-circle"></i>
+                            <span class="links_name">Mobility</span>
+                        </a>
+                        <span class="tooltip">Mobility</span>
+                    </li>
+                    <li>
+                        <a href="./../public/cluster.html">
+                            <i class="fa fa-fw fa-magnet"></i>
+                            <span class="links_name">Timeline</span>
+                        </a>
+                        <span class="tooltip">Timeline</span>
+                    </li>
+                    <li>
+                        <a href="./../public/cluster.html">
+                            <i class='bx bx-heart'></i>
+                            <span class="links_name">About Us</span>
+                        </a>
+                        <span class="tooltip">About Us</span>
+                    </li>
+                </ul>
             </div>
             <div id="wrapper" class="flex-center">
                 <svg class="VisSVG flex-center"></svg>
             </div>
-            <div id="slider-container">
+            <div id="slider-container" data-step="2" data-intro="You can change the timeline to see how the population changed from 2012 to 2022">
                 <div class="range">
                     <div class="range-slider">
                         <label for="range">Select a year:</label><br />
@@ -77,5 +104,6 @@
     </footer>
     <script src="./../public/javascript/data.js"></script>
     <script src="./../public/javascript/cluster.js"></script>
+    <script type="text/javascript" src="./../node_modules/intro.js/intro.js"></script>
 </body>
 </html>
