@@ -72,7 +72,7 @@ body, html {
   width: 37px;
   height: 37px;
   margin: 9px;
-  background-color: currentColor;
+  background-color: purple;
   border-radius: 50%;
 }
 
@@ -114,7 +114,7 @@ h1 {
 
 .description-page p {
   color:#3b3b3b;
-  overflow: hidden; /* Ensures the content is clipped */
+  overflow: hidden; 
   border-right: .15em solid black; /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as typing */
