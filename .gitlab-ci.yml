@@ -1,14 +1,11 @@
 pages:
   stage: deploy
-  environment: production
   script:
     - mkdir .public
-    - cp -r ./* .public
-    - rm -rf public
+    - cp -r * .public
     - mv .public public
   artifacts:
     paths:
-      # The folder that contains the files to be exposed at the Page URL
       - public
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  only:
+    - main # or main, depending on your default branch name
