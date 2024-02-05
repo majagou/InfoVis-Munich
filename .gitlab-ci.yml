@@ -1,13 +1,9 @@
-image: node:latest
+image: alpine:latest
 
 pages:
   stage: deploy
-  cache:
-    paths:
-      - node_modules/
   script:
-    - npm install
-    - npm run build
+    - echo "Deploying to GitLab Pages"
   artifacts:
     paths:
       - public

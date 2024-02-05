@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobility Nav</title>
     <link rel="stylesheet" href="./../public/css/style.css">
-    <link rel="stylesheet" href="./../node_modules/intro.js/introjs.css">
     <link rel="stylesheet" href="./../public/css/about.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="./../d3.v7.js"></script>
@@ -14,7 +13,7 @@
 </head>
 <body>
     <main>
-        <div id="container" data-step="1" data-title="Welcome!" data-intro="Here is our visualization of Munich Mobility and Population.">
+        <div id="container">
             <div id="sidebar" class="sidebar">
                 <div class="logo-details">
                     <i class='bx bxl-c-plus-plus icon'></i>
@@ -30,7 +29,7 @@
                         <span class="tooltip">Home</span>
                     </li>
                     <li>
-                        <a href="javascript:introJs().setOption('showProgress', true).start();">
+                        <a href="#">
                             <i class='bx bx-grid-alt'></i>
                             <span class="links_name">Tutorial</span>
                         </a>
@@ -95,6 +94,5 @@
         <p>&copy; Group 28 InfoVis</p>
     </footer>
     <script src="./../public/javascript/data.js"></script>
-    <script type="text/javascript" src="./../node_modules/intro.js/intro.js"></script>
 </body>
 </html>
