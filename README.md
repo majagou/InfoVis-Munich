@@ -36,6 +36,7 @@ Toggle to view detailed area and stop information.
 ## Vision
 ![Alt text](<figures/Vision Screenshots/Density.png>)
 ![Alt text](<figures/Vision Screenshots/Cluster.png>)
+![Alt text](<figures/Vision Screenshots/Network.png>)
 
 ## Sources
 
