@@ -1,11 +1,18 @@
+image: node:latest
+
 pages:
+  # Only need deploy stage
   stage: deploy
+  cache:
+    paths:
+      - node_modules/
   script:
-    - mkdir .public
-    - cp -r * .public
-    - mv .public public
+    - cd Webpage
+    - npm install
+    - npm run build
   artifacts:
     paths:
-      - public
+      - Webpage/build
+  publish: Webpage/build
   only:
-    - main # or main, depending on your default branch name
+    - main
