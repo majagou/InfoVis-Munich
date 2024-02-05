@@ -139,7 +139,7 @@ async function initializeMap() {
     // Initialize SVG, projection, etc.
     initializeSVG();
 
-    const initialYear = 2022; // Set your default year here
+    const initialYear = 2012; // Set your default year here
     updateMap(initialYear); // Initialize the map with the default year
 
     createLegend(d3.select("svg"));
