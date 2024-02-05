@@ -7,12 +7,11 @@ pages:
     paths:
       - node_modules/
   script:
-    - cd Webpage
     - npm install
     - npm run build
   artifacts:
     paths:
-      - Webpage/build
-  publish: Webpage/build
+      - public
+  publish: public
   only:
     - main
