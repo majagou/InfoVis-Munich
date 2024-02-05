@@ -1,7 +1,6 @@
 image: node:latest
 
 pages:
-  # Only need deploy stage
   stage: deploy
   cache:
     paths:
@@ -12,6 +11,5 @@ pages:
   artifacts:
     paths:
       - public
-  publish: public
   only:
     - main
