@@ -88,33 +88,33 @@ function convertStopsToGeoJSON(Data) {
 
 async function initializeMap() {
     // Load geojson data
-    layers.Stadtbezirk.data = await d3.json("./../public/geo-data/formatted-Stadtbezirk.geojson");
+    layers.Stadtbezirk.data = await d3.json("./geo-data/formatted-Stadtbezirk.geojson");
 
     layers.Stadtbezirk.data.features = layers.Stadtbezirk.data.features.map(function (feature) {
         return turf.rewind(feature, { reverse: true });
     });
 
-    layers.Bezirksteile.data = await d3.json("./../public/geo-data/formatted-Bezirksteile.geojson");
+    layers.Bezirksteile.data = await d3.json("./geo-data/formatted-Bezirksteile.geojson");
 
     layers.Bezirksteile.data.features = layers.Bezirksteile.data.features.map(function (feature) {
         return turf.rewind(feature, { reverse: true });
     });
 
-    layers.Stadtvieltel.data = await d3.json("./../public/geo-data/formatted-Stadtvieltel.geojson");
+    layers.Stadtvieltel.data = await d3.json("./geo-data/formatted-Stadtvieltel.geojson");
 
     layers.Stadtvieltel.data.features = layers.Stadtvieltel.data.features.map(function (feature) {
         return turf.rewind(feature, { reverse: true });
     });
 
-    layers.WC.data = await d3.json("./../public/geo-data/formatted_wc.geojson");
-    layers.Market.data = await d3.json("./../public/geo-data/formatted_market.geojson");
-    const Stopdata = await d3.dsv(";", "./../public/csv-data/m.csv");
+    layers.WC.data = await d3.json("./geo-data/formatted_wc.geojson");
+    layers.Market.data = await d3.json("./geo-data/formatted_market.geojson");
+    const Stopdata = await d3.dsv(";", "./csv-data/m.csv");
     //console.log(Stopdata)
     layers.Stop.data = convertStopsToGeoJSON(Stopdata);
     //console.log(layers.Stop.data);
 
-    layers.Mobile.data = await d3.json("./../public/geo-data/Mobilitat.geojson")
-    layers.MainStation.data = await d3.json("./../public/geo-data/TrafficStation.geojson")
+    layers.Mobile.data = await d3.json("./geo-data/Mobilitat.geojson")
+    layers.MainStation.data = await d3.json("./geo-data/TrafficStation.geojson")
 
     // Setup event listeners for buttons
     document.getElementById("AB-1").addEventListener("click", () => toggleLayer('Stadtbezirk'));
@@ -126,7 +126,7 @@ async function initializeMap() {
     document.getElementById("AB-7").addEventListener("click", () => toggleLayer('Mobile'));
     document.getElementById("AB-8").addEventListener("click", () => toggleLayer('MainStation'));
     
-    const populationData = await d3.csv("./../public/csv-data/Bevölkerungsdichte.csv");
+    const populationData = await d3.csv("./csv-data/Bevölkerungsdichte.csv");
 
     const totalPopulation = 1588330; // Total population for percentage calculation
 
@@ -402,15 +402,15 @@ async function drawMap() {
 function getIconUrl(layerName) {
     switch (layerName) {
         case "WC":
-            return "./../public/icon/pointer.png";
+            return "./icon/pointer.png";
         case "Market":
-            return "./../public/icon/shopping-cart.png";
+            return "./icon/shopping-cart.png";
         case "Stop":
-            return "./../public/icon/location.png";
+            return "./icon/location.png";
         case "Mobile":
-            return "./../public/icon/Hstation.png";
+            return "./icon/Hstation.png";
         case "MainStation":
-            return "./../public/icon/zug.png";
+            return "./icon/zug.png";
         default:
             return "";
     }
