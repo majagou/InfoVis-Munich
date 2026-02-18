@@ -54,7 +54,7 @@ const colors = [
     "#cbb8d7", "#c8ada0", "#af8e53",
     "#f2e7e1", "#e4d9ac", "#c8b35a"
 ];
-
+// Initialize the SVG and related elements
 function initializeSVG() {
 
     svg = d3.select(".VisSVG")
